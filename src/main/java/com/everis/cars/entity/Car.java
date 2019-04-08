@@ -27,29 +27,32 @@ public class Car {
 	@Column(name = "id", updatable = false, nullable = false)
 	protected Number id;
 
-	@Column
-	@NotNull
-	@Size(min=2, max=50)
+	@Column(name = "brand", nullable = false, length=50)
+	@NotNull(message="Brand field can't be empty.")
+	@Size(min=2, max=50, message="Brand field must have a length from 2 to 50 characterers.")
 	protected String brand;
 
-	@Column
-	@NotNull
+	@Column(name = "registration", nullable = false)
+	@NotNull(message="Registration field for Car can't be empty.")
 	protected Timestamp registration;
 
-	@Column
-	@NotNull
-	@Size(min=2, max=100)
+	@Column(name = "country", nullable = false, length=100)
+	@NotNull(message="Country field for Car can't be empty.")
+	@Size(min=2, max=100, message="Country field must have a length from 2 to 100 characterers.")
 	protected String country;
 
-	@Column
+	@Column(name = "created_at", updatable = false, nullable = false)
+	@NotNull
 	protected Timestamp created_at;
 
-	@Column
+	@Column(name = "updated_at", nullable = false)
+	@NotNull
 	protected Timestamp updated_at;
 	
 	@PrePersist
 	protected void onCreate () {
 		created_at = (Timestamp) new Date();
+		updated_at = (Timestamp) new Date();
 	}
 	
 	@PreUpdate
@@ -61,7 +64,7 @@ public class Car {
 		return id;
 	}
 
-	public void setId(Number id) {
+	public void setId(final Number id) {
 		this.id = id;
 	}
 
@@ -69,7 +72,7 @@ public class Car {
 		return brand;
 	}
 
-	public void setBrand(String brand) {
+	public void setBrand(final String brand) {
 		this.brand = brand;
 	}
 
@@ -77,7 +80,7 @@ public class Car {
 		return registration;
 	}
 
-	public void setRegistration(Timestamp registration) {
+	public void setRegistration(final Timestamp registration) {
 		this.registration = registration;
 	}
 
@@ -85,7 +88,7 @@ public class Car {
 		return country;
 	}
 
-	public void setCountry(String country) {
+	public void setCountry(final String country) {
 		this.country = country;
 	}
 
