@@ -12,28 +12,28 @@ import com.everis.cars.entity.Car;
 public class CarService {
 	
 	@PersistenceContext(unitName="em_postgres")
-	private static EntityManager entityManager;
+	private EntityManager entityManager;
 
 	public List<Car> getCars() {
 		return entityManager.createNamedQuery(Car.FIND_ALL, Car.class).getResultList();
 	}
 
-	public static Car getCar( final Number carId ) throws CarNotFoundException {
+	public Car getCar( final Number carId ) throws CarNotFoundException {
 		Car car = entityManager.find(Car.class, carId);
 
-		if (car == null) {
+		if (car == null) { // Buscar si null se puede verificar por JAVA
 	        throw new CarNotFoundException("Car with ID "+carId+" not found");
 	    }
 
 		return car;
 	}
 	
-	public static Car createCar( final Car car ) {
+	public Car createCar( final Car car ) {
 		entityManager.persist(car);
 		return car;
 	}
 	
-	public static Car updateCar ( final Car car ) throws CarNotFoundException {
+	public Car updateCar ( final Car car ) throws CarNotFoundException {
 		// Throw CarNotFoundException if car doesn't exist.
 		getCar(car.getId());
 		
@@ -41,9 +41,10 @@ public class CarService {
 		return car;
 	}
 	
-	public static void deleteCar ( final Number carId ) throws CarNotFoundException {
+	public Car deleteCar ( final Number carId ) throws CarNotFoundException {
 		Car car = getCar(carId);
+		
 		entityManager.remove(car);
-		return;
+		return car;
 	}
 }
