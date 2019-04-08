@@ -1,6 +1,5 @@
 package com.everis.cars.control;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -24,13 +23,7 @@ public class CarService {
 		return car;
 	}
 	
-	public static Car createCar( String brand, Timestamp registration, String country ) {
-		// TODO: Move this stuff to a CarFactory
-		Car car = new Car();
-		car.setBrand(brand);
-		car.setRegistration(registration);
-		car.setCountry(country);
-
+	public static Car createCar( Car car ) {
 		entityManager.persist(car);
 		return car;
 	}
