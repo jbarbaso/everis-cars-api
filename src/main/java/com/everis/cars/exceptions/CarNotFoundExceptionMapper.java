@@ -14,7 +14,7 @@ public class CarNotFoundExceptionMapper implements ExceptionMapper<CarNotFoundEx
 	@Override
 	public Response toResponse(final CarNotFoundException exception) {
 		ErrorMessageCollection errors = new ErrorMessageCollection();
-		errors.addError(new ErrorMessage(exception.getMessage(), 400));
+		errors.addError(new ErrorMessage(exception.getMessage(), 404));
 		
 		return Response.status(Status.NOT_FOUND)
 				.entity(errors)

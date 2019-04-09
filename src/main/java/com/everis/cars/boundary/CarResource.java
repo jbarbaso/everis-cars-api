@@ -3,8 +3,8 @@ package com.everis.cars.boundary;
 import java.net.URI;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -29,7 +29,7 @@ import com.everis.cars.exceptions.CarNotFoundException;
 @Produces(MediaType.APPLICATION_JSON)
 public class CarResource {
 
-	@Inject
+	@EJB
 	CarService carService;
 	
 	@Context 
@@ -42,37 +42,50 @@ public class CarResource {
 
 	@POST
 	public Response createCar(@Valid final Car car) {
-		Car newCar = carService.createCar(car);
-		String newId = String.valueOf(newCar.getId());
-		URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+		final Car newCar = carService.createCar(car);
+		
+		// TODO: Create the URI from ResourcesUtils class.
+		final String newId = String.valueOf(newCar.getId());
+		final URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+
 		return Response.created(uri)
 				.entity(newCar)
 				.build();
 	}
-	
+
 	@PUT
 	@Path("/{carId}")
 	public Response updateCar(@PathParam("carId") final long carId, @Valid final Car car) throws CarNotFoundException {
 		car.setId(carId);
-		Car updatedCar = carService.updateCar(car);
+		final Car updatedCar = carService.updateCar(car);
 		
-		String currentId = String.valueOf(updatedCar.getId());
-		URI uri = uriInfo.getAbsolutePathBuilder().path(currentId).build();
+		// TODO: Create the URI from ResourcesUtils class.
+		final String currentId = String.valueOf(updatedCar.getId());
+		final URI uri = uriInfo.getAbsolutePathBuilder().path(currentId).build();
+
 		return Response.created(uri)
 				.entity(updatedCar)
 				.build();
 	}
-	
+
 	@DELETE
 	@Path("/{carId}")
-	public Car deleteCar(@PathParam("carId") final long carId) throws CarNotFoundException {
-		return carService.deleteCar(carId);
+	public Response deleteCar(@PathParam("carId") final long carId) throws CarNotFoundException {
+		final Car deletedCar = carService.deleteCar(carId);
+		
+		return Response.ok()
+				.entity(deletedCar)
+				.build();
 	}
 
 	@GET
 	@Path("/{carId}")
-	public Car getCar(@PathParam("carId") final long carId) throws CarNotFoundException {
-		return carService.getCar(carId);
+	public Response getCar(@PathParam("carId") final long carId) throws CarNotFoundException {
+		final Car car = carService.getCar(carId);
+				
+		return Response.ok()
+				.entity(car)
+				.build();
 	}
 
 }

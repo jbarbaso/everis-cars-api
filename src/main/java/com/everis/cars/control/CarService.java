@@ -20,7 +20,7 @@ public class CarService {
 	}
 
 	public Car getCar( final Number carId ) throws CarNotFoundException {
-		Car car = entityManager.find(Car.class, carId);
+		final Car car = entityManager.find(Car.class, carId);
 
 		if (car == null) {
 	        throw new CarNotFoundException("Car with ID "+carId+" not found");
