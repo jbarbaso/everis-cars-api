@@ -42,22 +42,22 @@ public class Car {
 	protected String country;
 
 	@Column(name = "created_at", updatable = false, nullable = false)
-	@NotNull
 	protected Timestamp created_at;
 
 	@Column(name = "updated_at", nullable = false)
-	@NotNull
 	protected Timestamp updated_at;
 	
 	@PrePersist
 	protected void onCreate () {
-		created_at = (Timestamp) new Date();
-		updated_at = (Timestamp) new Date();
+		final Date date = new Date();
+		created_at = new Timestamp(date.getTime());
+		updated_at = new Timestamp(date.getTime());
 	}
 	
 	@PreUpdate
 	protected void onUpdate() {
-		updated_at = (Timestamp) new Date();
+		final Date date = new Date();
+		updated_at = new Timestamp(date.getTime());
 	}
 	
 	public Number getId() {
