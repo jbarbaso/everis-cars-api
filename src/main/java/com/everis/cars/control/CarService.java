@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.everis.cars.entity.Car;
+import com.everis.cars.exceptions.CarNotFoundException;
 
 @Stateless
 public class CarService {
@@ -21,7 +22,7 @@ public class CarService {
 	public Car getCar( final Number carId ) throws CarNotFoundException {
 		Car car = entityManager.find(Car.class, carId);
 
-		if (car == null) { // Buscar si null se puede verificar por JAVA
+		if (car == null) {
 	        throw new CarNotFoundException("Car with ID "+carId+" not found");
 	    }
 
@@ -37,7 +38,7 @@ public class CarService {
 		// Throw CarNotFoundException if car doesn't exist.
 		getCar(car.getId());
 		
-		entityManager.persist(car);
+		entityManager.merge(car);
 		return car;
 	}
 	
