@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
+
 @Entity
 @Table(name="car")
 @NamedQuery(name = Car.FIND_ALL, query = "select c from Car c")
@@ -25,6 +28,7 @@ public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", updatable = false, nullable = false)
+	@ApiModelProperty(value = "Car ID", accessMode= AccessMode.READ_ONLY, hidden = true)
 	protected Number id;
 
 	@Column(name = "brand", nullable = false, length=50)
@@ -42,9 +46,11 @@ public class Car {
 	protected String country;
 
 	@Column(name = "created_at", updatable = false, nullable = false)
+	@ApiModelProperty(value = "Created time", accessMode= AccessMode.READ_ONLY)
 	protected Timestamp created_at;
 
 	@Column(name = "updated_at", nullable = false)
+	@ApiModelProperty(value = "Last updated time", accessMode= AccessMode.READ_ONLY)
 	protected Timestamp updated_at;
 	
 	@PrePersist
@@ -96,7 +102,16 @@ public class Car {
 		return created_at;
 	}
 
+	public void setCreated_at(final Timestamp created_at) {
+		this.created_at = created_at;
+	}
+
+	
 	public Timestamp getUpdated_at() {
 		return updated_at;
+	}
+
+	public void setUpdated_at(final Timestamp updated_at) {
+		this.updated_at = updated_at;
 	}
 }

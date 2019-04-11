@@ -37,9 +37,8 @@ public class CarService {
 	public Car updateCar ( final Car car ) throws CarNotFoundException {
 		// Throw CarNotFoundException if car doesn't exist.
 		getCar(car.getId());
-		
-		entityManager.merge(car);
-		return car;
+
+		return entityManager.merge(car);
 	}
 	
 	public Car deleteCar ( final Number carId ) throws CarNotFoundException {
