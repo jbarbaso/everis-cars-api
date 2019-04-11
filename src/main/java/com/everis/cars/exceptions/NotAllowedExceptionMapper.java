@@ -1,5 +1,6 @@
 package com.everis.cars.exceptions;
 
+import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -9,10 +10,10 @@ import com.everis.cars.entity.ErrorMessage;
 import com.everis.cars.entity.ErrorMessageCollection;
 
 /**
- * ExceptionMapper to catch CarNotFound exceptions and standardize exception responses
+ * ExceptionMapper to catch NotAllowedException exceptions and standardize exception responses
  */
 @Provider
-public class CarNotFoundExceptionMapper implements ExceptionMapper<CarNotFoundException> {
+public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedException> {
 
 	/**
 	 * toResponse override to implement the custom response message 
@@ -20,11 +21,11 @@ public class CarNotFoundExceptionMapper implements ExceptionMapper<CarNotFoundEx
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override
-	public Response toResponse(final CarNotFoundException exception) {
+	public Response toResponse(NotAllowedException exception) {
 		ErrorMessageCollection errors = new ErrorMessageCollection();
-		errors.addError(new ErrorMessage(exception.getMessage(), 404));
+		errors.addError(new ErrorMessage(exception.getMessage(), Status.METHOD_NOT_ALLOWED.getStatusCode()));
 		
-		return Response.status(Status.NOT_FOUND)
+		return Response.status(Status.METHOD_NOT_ALLOWED)
 				.entity(errors)
 				.build();
 	}

@@ -5,14 +5,17 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+
+import org.glassfish.jersey.server.ParamException.PathParamException;
+
 import com.everis.cars.entity.ErrorMessage;
 import com.everis.cars.entity.ErrorMessageCollection;
 
 /**
- * ExceptionMapper to catch CarNotFound exceptions and standardize exception responses
+ * ExceptionMapper to catch PathParamException exceptions and standardize exception responses
  */
 @Provider
-public class CarNotFoundExceptionMapper implements ExceptionMapper<CarNotFoundException> {
+public class PathParamExceptionMapper implements ExceptionMapper<PathParamException> {
 
 	/**
 	 * toResponse override to implement the custom response message 
@@ -20,13 +23,12 @@ public class CarNotFoundExceptionMapper implements ExceptionMapper<CarNotFoundEx
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override
-	public Response toResponse(final CarNotFoundException exception) {
+	public Response toResponse(PathParamException exception) {
 		ErrorMessageCollection errors = new ErrorMessageCollection();
-		errors.addError(new ErrorMessage(exception.getMessage(), 404));
+		errors.addError(new ErrorMessage(exception.getMessage(), Status.NOT_FOUND.getStatusCode()));
 		
 		return Response.status(Status.NOT_FOUND)
 				.entity(errors)
 				.build();
 	}
-
 }

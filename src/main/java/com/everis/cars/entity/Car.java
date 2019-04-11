@@ -18,41 +18,70 @@ import javax.validation.constraints.Size;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiModelProperty.AccessMode;
 
+/**
+ * Car entity model
+ */
 @Entity
 @Table(name="car")
 @NamedQuery(name = Car.FIND_ALL, query = "select c from Car c")
 public class Car {
 	
+	/**
+	 * Constant defined for find all cars named query
+	 */
 	public static final String FIND_ALL = "Car.findAll";
 	
+	/**
+	 * Entity identifier 
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", updatable = false, nullable = false)
 	@ApiModelProperty(value = "Car ID", accessMode= AccessMode.READ_ONLY, hidden = true)
 	protected Number id;
 
+	/**
+	 * Brand car string field
+	 */
 	@Column(name = "brand", nullable = false, length=50)
 	@NotNull(message="Brand field can't be empty.")
 	@Size(min=2, max=50, message="Brand field must have a length from 2 to 50 characterers.")
 	protected String brand;
 
+	/**
+	 * Registration car timestamp field
+	 */
 	@Column(name = "registration", nullable = false)
 	@NotNull(message="Registration field for Car can't be empty.")
 	protected Timestamp registration;
 
+	/**
+	 * Country car string field
+	 */
 	@Column(name = "country", nullable = false, length=100)
 	@NotNull(message="Country field for Car can't be empty.")
 	@Size(min=2, max=100, message="Country field must have a length from 2 to 100 characterers.")
 	protected String country;
 
+	/**
+	 * Created timestamp field
+	 */
 	@Column(name = "created_at", updatable = false, nullable = false)
 	@ApiModelProperty(value = "Created time", accessMode= AccessMode.READ_ONLY)
 	protected Timestamp created_at;
 
+	/**
+	 * Last Update timestamp field
+	 */
 	@Column(name = "updated_at", nullable = false)
 	@ApiModelProperty(value = "Last updated time", accessMode= AccessMode.READ_ONLY)
 	protected Timestamp updated_at;
 	
+	/**
+	 * Add current timestamp values to created_at and updated_at before persist.
+	 * 
+	 * @return void
+	 */
 	@PrePersist
 	protected void onCreate () {
 		final Date date = new Date();
@@ -60,57 +89,126 @@ public class Car {
 		updated_at = new Timestamp(date.getTime());
 	}
 	
+	/**
+	 * Add current timestamp value to updated_at before update.
+	 * 
+	 * @return void
+	 */
 	@PreUpdate
 	protected void onUpdate() {
 		final Date date = new Date();
 		updated_at = new Timestamp(date.getTime());
 	}
 	
+	/**
+	 * ID getter mehtod
+	 * 
+	 * @return Number id
+	 */
 	public Number getId() {
 		return id;
 	}
 
+	/**
+	 * Id field setter method
+	 * 
+	 * @param Number id
+	 * @return void
+	 */
 	public void setId(final Number id) {
 		this.id = id;
 	}
 
+	/**
+	 * Brand getter method
+	 * 
+	 * @return String brand
+	 */
 	public String getBrand() {
 		return brand;
 	}
 
+	/**
+	 * Brand field setter method
+	 * 
+	 * @param String brand
+	 * @return void
+	 */
 	public void setBrand(final String brand) {
 		this.brand = brand;
 	}
 
+	/**
+	 * Registration getter method
+	 * 
+	 * @return Timestamp registration
+	 */
 	public Timestamp getRegistration() {
 		return registration;
 	}
-
+	
+	/**
+	 * Registration field setter method
+	 * 
+	 * @param Timestamp registration
+	 * @return void
+	 */
 	public void setRegistration(final Timestamp registration) {
 		this.registration = registration;
 	}
 
+	/**
+	 * Country getter method
+	 * 
+	 * @return String country
+	 */
 	public String getCountry() {
 		return country;
 	}
 
+	/**
+	 * Country field setter method
+	 * 
+	 * @param String country
+	 * @return void
+	 */
 	public void setCountry(final String country) {
 		this.country = country;
 	}
 
+	/**
+	 * Created at getter method
+	 * 
+	 * @return Timestamp created_at
+	 */
 	public Timestamp getCreated_at() {
 		return created_at;
 	}
 
+	/**
+	 * Created at setter method
+	 * 
+	 * @param Timestamp created_at
+	 */
 	public void setCreated_at(final Timestamp created_at) {
 		this.created_at = created_at;
 	}
 
 	
+	/**
+	 * Updated at getter method
+	 * 
+	 * @return Timestamp updated_at
+	 */
 	public Timestamp getUpdated_at() {
 		return updated_at;
 	}
 
+	/**
+	 * Updated at setter method
+	 * 
+	 * @param updated_at
+	 */
 	public void setUpdated_at(final Timestamp updated_at) {
 		this.updated_at = updated_at;
 	}
