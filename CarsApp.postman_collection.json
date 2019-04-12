@@ -1,0 +1,729 @@
+{
+	"info": {
+		"_postman_id": "84d09733-f142-4f11-b2db-437b5e2ee47d",
+		"name": "CarsApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a new Car",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "23c4f8d1-ebb7-4d5d-a512-49281102fcb2",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"carId\", jsonData.id);",
+							"",
+							"pm.test(\"Status code is 201\", () => {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"var schema = {",
+							"    \"type\" : \"object\",",
+							"    \"required\": [ ",
+							"        \"id\", ",
+							"        \"brand\", ",
+							"        \"registration\", ",
+							"        \"country\", ",
+							"        \"created_at\", ",
+							"        \"updated_at\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"id\": {",
+							"            \"type\": \"number\"",
+							"        },",
+							"        \"brand\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"registration\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"country\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"created_at\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"updated_at\": {",
+							"            \"type\": \"string\"",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Schema returned is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"brand\": \"BMW\",\n\t\"registration\": \"2019-04-09T10:00:00\",\n\t\"country\": \"Spain\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cars/resources/cars/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"resources",
+						"cars",
+						""
+					]
+				},
+				"description": "Create a new Car"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Car",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bea38bad-fdf8-4910-b220-1c2166c84a2b",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var schema = {",
+							"    \"type\" : \"object\",",
+							"    \"required\": [ ",
+							"        \"id\", ",
+							"        \"brand\", ",
+							"        \"registration\", ",
+							"        \"country\", ",
+							"        \"created_at\", ",
+							"        \"updated_at\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"id\": {",
+							"            \"type\": \"number\"",
+							"        },",
+							"        \"brand\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"registration\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"country\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"created_at\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"updated_at\": {",
+							"            \"type\": \"string\"",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Schema returned is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/cars/resources/cars/{{carId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"resources",
+						"cars",
+						"{{carId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Method Not Allowed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bea38bad-fdf8-4910-b220-1c2166c84a2b",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 405\", () => {",
+							"    pm.response.to.have.status(405);",
+							"});",
+							"",
+							"pm.test(\"Error message contains Method Not Allowed\", function () {",
+							"    pm.expect(jsonData.errors[0].message)",
+							"    .to.include(\"Method Not Allowed\");",
+							"});",
+							"",
+							"var schema = {",
+							"    \"type\" : \"object\",",
+							"    \"required\": [ ",
+							"        \"errors\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"errors\": {",
+							"            \"type\": \"array\",",
+							"            \"items\" : {",
+							"                \"required\": [ ",
+							"                    \"code\",",
+							"                    \"message\"",
+							"                ],",
+							"                \"properties\": {",
+							"                    \"code\": {",
+							"                        \"type\": \"number\"",
+							"                    },",
+							"                    \"message\": {",
+							"                        \"type\": \"string\"",
+							"                    }",
+							"                }    ",
+							"            }",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Schema returned is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/cars/resources/cars/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"resources",
+						"cars",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Car",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a4a42d8-9ae8-4791-a607-de05f1c2b74e",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var schema = {",
+							"    \"type\" : \"object\",",
+							"    \"required\": [ ",
+							"        \"id\", ",
+							"        \"brand\", ",
+							"        \"registration\", ",
+							"        \"country\", ",
+							"        \"updated_at\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"id\": {",
+							"            \"type\": \"number\"",
+							"        },",
+							"        \"brand\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"registration\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"country\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"created_at\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"updated_at\": {",
+							"            \"type\": \"string\"",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Schema returned is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"brand\": \"BMW_updated\",\n\t\"registration\": \"2019-04-09T10:00:00\",\n\t\"country\": \"Spain\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cars/resources/cars/{{carId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"resources",
+						"cars",
+						"{{carId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Car without body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a4a42d8-9ae8-4791-a607-de05f1c2b74e",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 400\", () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"var schema = {",
+							"    \"type\" : \"object\",",
+							"    \"required\": [ ",
+							"        \"errors\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"errors\": {",
+							"            \"type\": \"array\",",
+							"            \"items\" : {",
+							"                \"required\": [ ",
+							"                    \"code\",",
+							"                    \"message\"",
+							"                ],",
+							"                \"properties\": {",
+							"                    \"code\": {",
+							"                        \"type\": \"number\"",
+							"                    },",
+							"                    \"message\": {",
+							"                        \"type\": \"string\"",
+							"                    }",
+							"                }    ",
+							"            }",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Schema returned is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Error message contains Bad Request\", function () {",
+							"    pm.expect(jsonData.errors[0].message)",
+							"    .to.include(\"Bad Request\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/cars/resources/cars/{{carId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"resources",
+						"cars",
+						"{{carId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Car",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33f64904-fd2c-4bc0-a175-fc732d7c4268",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"var schema = {",
+							"    \"type\" : \"object\",",
+							"    \"required\": [ ",
+							"        \"id\",",
+							"        \"brand\",",
+							"        \"registration\",",
+							"        \"country\",",
+							"        \"updated_at\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"id\": {",
+							"            \"type\": \"number\"",
+							"        },",
+							"        \"brand\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"registration\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"country\": {",
+							"            \"type\": \"string\"",
+							"        },",
+							"        \"updated_at\": {",
+							"            \"type\": \"string\"",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Schema returned is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/cars/resources/cars/{{carId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"resources",
+						"cars",
+						"{{carId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Car Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bea38bad-fdf8-4910-b220-1c2166c84a2b",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var carId = pm.environment.get(\"carId\");",
+							"",
+							"pm.test(\"Status code is 404\", () => {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"var schema = {",
+							"    \"type\" : \"object\",",
+							"    \"required\": [ ",
+							"        \"errors\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"errors\": {",
+							"            \"type\": \"array\",",
+							"            \"items\" : {",
+							"                \"required\": [ ",
+							"                    \"code\",",
+							"                    \"message\"",
+							"                ],",
+							"                \"properties\": {",
+							"                    \"code\": {",
+							"                        \"type\": \"number\"",
+							"                    },",
+							"                    \"message\": {",
+							"                        \"type\": \"string\"",
+							"                    }",
+							"                }    ",
+							"            }",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Schema returned is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Error message contains Car with ID \"+carId+\" not found\", function () {",
+							"    pm.expect(jsonData.errors[0].message)",
+							"    .to.eql(\"Car with ID \"+carId+\" not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/cars/resources/cars/{{carId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"resources",
+						"cars",
+						"{{carId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Car Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33f64904-fd2c-4bc0-a175-fc732d7c4268",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var carId = pm.environment.get(\"carId\");",
+							"",
+							"pm.test(\"Status code is 404\", () => {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"",
+							"var schema = {",
+							"    \"type\" : \"object\",",
+							"    \"required\": [ ",
+							"        \"errors\"",
+							"    ],",
+							"    \"properties\": {",
+							"        \"errors\": {",
+							"            \"type\": \"array\",",
+							"            \"items\" : {",
+							"                \"required\": [ ",
+							"                    \"code\",",
+							"                    \"message\"",
+							"                ],",
+							"                \"properties\": {",
+							"                    \"code\": {",
+							"                        \"type\": \"number\"",
+							"                    },",
+							"                    \"message\": {",
+							"                        \"type\": \"string\"",
+							"                    }",
+							"                }    ",
+							"            }",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Schema returned is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Error message contains Car not found\", function () {",
+							"    pm.expect(jsonData.errors[0].message)",
+							"    .to.include(\"Car with ID \"+carId+\" not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/cars/resources/cars/{{carId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"resources",
+						"cars",
+						"{{carId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all cars",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36a0f67b-d390-40cb-80af-a3abbb509a95",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var schema = {",
+							"    \"type\": \"array\",",
+							"    \"items\": {",
+							"        \"type\" : \"object\",",
+							"        \"required\": [ ",
+							"            \"id\", ",
+							"            \"brand\", ",
+							"            \"registration\", ",
+							"            \"country\", ",
+							"            \"created_at\", ",
+							"            \"updated_at\"",
+							"        ],",
+							"        \"properties\": {",
+							"            \"id\": {",
+							"                \"type\": \"number\"",
+							"            },",
+							"            \"brand\": {",
+							"                \"type\": \"string\"",
+							"            },",
+							"            \"registration\": {",
+							"                \"type\": \"string\"",
+							"            },",
+							"            \"country\": {",
+							"                \"type\": \"string\"",
+							"            },",
+							"            \"created_at\": {",
+							"                \"type\": \"string\"",
+							"            },",
+							"            \"updated_at\": {",
+							"                \"type\": \"string\"",
+							"            }",
+							"        }",
+							"    }",
+							"    ",
+							"};",
+							"",
+							"pm.test('Schema returned is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/cars/resources/cars/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"resources",
+						"cars",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
