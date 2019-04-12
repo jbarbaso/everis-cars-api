@@ -5,6 +5,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import org.apache.log4j.Logger;
+
 import com.everis.cars.entity.ErrorMessage;
 import com.everis.cars.entity.ErrorMessageCollection;
 
@@ -13,6 +15,13 @@ import com.everis.cars.entity.ErrorMessageCollection;
  */
 @Provider
 public class CarNotFoundExceptionMapper implements ExceptionMapper<CarNotFoundException> {
+	
+	/**
+	 * Logger instance
+	 * 
+	 * @see org.apache.log4j.Logger
+	 */
+	private static Logger logger = Logger.getLogger(CarNotFoundException.class);
 
 	/**
 	 * toResponse override to implement the custom response message 
@@ -23,6 +32,7 @@ public class CarNotFoundExceptionMapper implements ExceptionMapper<CarNotFoundEx
 	 */
 	@Override
 	public Response toResponse(final CarNotFoundException exception) {
+		logger.error(exception.getMessage());
 		ErrorMessageCollection errors = new ErrorMessageCollection();
 		errors.addError(new ErrorMessage(exception.getMessage(), 404));
 		

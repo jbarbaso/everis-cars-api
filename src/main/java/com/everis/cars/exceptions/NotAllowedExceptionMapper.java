@@ -6,6 +6,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import org.apache.log4j.Logger;
+
 import com.everis.cars.entity.ErrorMessage;
 import com.everis.cars.entity.ErrorMessageCollection;
 
@@ -14,6 +16,13 @@ import com.everis.cars.entity.ErrorMessageCollection;
  */
 @Provider
 public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedException> {
+	
+	/**
+	 * Logger instance
+	 * 
+	 * @see org.apache.log4j.Logger
+	 */
+	private static Logger logger = Logger.getLogger(NotAllowedException.class);
 
 	/**
 	 * toResponse override to implement the custom response message 
@@ -24,6 +33,7 @@ public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedExce
 	 */
 	@Override
 	public Response toResponse(NotAllowedException exception) {
+		logger.error(exception.getMessage());
 		ErrorMessageCollection errors = new ErrorMessageCollection();
 		errors.addError(new ErrorMessage(exception.getMessage(), Status.METHOD_NOT_ALLOWED.getStatusCode()));
 		

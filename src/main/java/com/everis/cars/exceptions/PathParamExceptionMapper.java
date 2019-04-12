@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-
+import org.apache.log4j.Logger;
 import org.glassfish.jersey.server.ParamException.PathParamException;
 
 import com.everis.cars.entity.ErrorMessage;
@@ -16,6 +16,13 @@ import com.everis.cars.entity.ErrorMessageCollection;
  */
 @Provider
 public class PathParamExceptionMapper implements ExceptionMapper<PathParamException> {
+	
+	/**
+	 * Logger instance
+	 * 
+	 * @see org.apache.log4j.Logger
+	 */
+	private static Logger logger = Logger.getLogger(PathParamException.class);
 
 	/**
 	 * toResponse override to implement the custom response message 
@@ -26,6 +33,7 @@ public class PathParamExceptionMapper implements ExceptionMapper<PathParamExcept
 	 */
 	@Override
 	public Response toResponse(PathParamException exception) {
+		logger.error(exception.getMessage());
 		ErrorMessageCollection errors = new ErrorMessageCollection();
 		errors.addError(new ErrorMessage(exception.getMessage(), Status.NOT_FOUND.getStatusCode()));
 		
