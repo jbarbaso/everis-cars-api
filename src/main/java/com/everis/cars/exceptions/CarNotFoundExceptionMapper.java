@@ -17,6 +17,8 @@ public class CarNotFoundExceptionMapper implements ExceptionMapper<CarNotFoundEx
 	/**
 	 * toResponse override to implement the custom response message 
 	 * 
+	 * @param exception the exception given to be formatted
+	 * @return response with message object and current status code
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override

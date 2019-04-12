@@ -18,6 +18,8 @@ public class BeanValConstrainViolationExceptionMapper implements ExceptionMapper
 	/**
 	 * toResponse override to implement the custom response message 
 	 * 
+	 * @param exception the exception given to be formatted
+	 * @return response with message object and current status code
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override
@@ -30,8 +32,8 @@ public class BeanValConstrainViolationExceptionMapper implements ExceptionMapper
 	/**
 	 * Prepare error message collection with catched exceptions
 	 * 
-	 * @param ConstraintViolationException exception
-	 * @return ErrorMessageCollection errors
+	 * @param exception the exception to be formated
+	 * @return errors list
 	 */
 	private ErrorMessageCollection prepareMessage(final ConstraintViolationException exception) {
 		ErrorMessageCollection errors = new ErrorMessageCollection();

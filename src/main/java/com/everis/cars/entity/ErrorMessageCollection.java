@@ -16,7 +16,7 @@ public class ErrorMessageCollection {
 	/**
 	 * Get errors list
 	 * 
-	 * @return List<ErrorMessage>
+	 * @return the error message collection
 	 */
 	public List<ErrorMessage> getErrors() {
 		return errors;
@@ -25,7 +25,7 @@ public class ErrorMessageCollection {
 	/**
 	 * Set a new errors list
 	 * 
-	 * @param List<ErrorMessage> errors
+	 * @param errors the errors list to be setted
 	 * @return void
 	 */
 	public void setErrors(List<ErrorMessage> errors) {
@@ -35,7 +35,7 @@ public class ErrorMessageCollection {
 	/**
 	 * Add a new error to errors list
 	 * 
-	 * @param error
+	 * @param error the error to be added to the errors list
 	 * @return void
 	 */
 	public void addError(final ErrorMessage error) {

@@ -25,8 +25,8 @@ public class ErrorMessage {
 	/**
 	 * Constructor with basic setters to create a new complete instance of ErrorMessage 
 	 * 
-	 * @param message
-	 * @param code
+	 * @param message the error message value to be setted
+	 * @param code the error code value to be setted
 	 * @return void
 	 */
 	public ErrorMessage(final String message, final int code) {
@@ -38,7 +38,7 @@ public class ErrorMessage {
 	/**
 	 * Message getter method
 	 * 
-	 * @return String message
+	 * @return the error message in string format
 	 */
 	public String getMessage() {
 		return message;
@@ -47,7 +47,7 @@ public class ErrorMessage {
 	/**
 	 * Message field setter method
 	 * 
-	 * @param String message
+	 * @param message the error message value to be setted 
 	 */
 	public void setMessage(final String message) {
 		this.message = message;
@@ -56,7 +56,7 @@ public class ErrorMessage {
 	/**
 	 * Code getter method
 	 * 
-	 * @return int code
+	 * @return the error code in int format
 	 */
 	public int getCode() {
 		return code;
@@ -65,7 +65,7 @@ public class ErrorMessage {
 	/**
 	 * Code field setter method
 	 * 
-	 * @param int code
+	 * @param code the error code value to be setted
 	 */
 	public void setCode(final int code) {
 		this.code = code;

@@ -103,7 +103,7 @@ public class Car {
 	/**
 	 * ID getter mehtod
 	 * 
-	 * @return Number id
+	 * @return car identifier
 	 */
 	public Number getId() {
 		return id;
@@ -112,7 +112,7 @@ public class Car {
 	/**
 	 * Id field setter method
 	 * 
-	 * @param Number id
+	 * @param car identifier to be setted
 	 * @return void
 	 */
 	public void setId(final Number id) {
@@ -122,7 +122,7 @@ public class Car {
 	/**
 	 * Brand getter method
 	 * 
-	 * @return String brand
+	 * @return car brand value in string format
 	 */
 	public String getBrand() {
 		return brand;
@@ -131,7 +131,7 @@ public class Car {
 	/**
 	 * Brand field setter method
 	 * 
-	 * @param String brand
+	 * @param car brand value to be setted
 	 * @return void
 	 */
 	public void setBrand(final String brand) {
@@ -141,7 +141,7 @@ public class Car {
 	/**
 	 * Registration getter method
 	 * 
-	 * @return Timestamp registration
+	 * @return car registration value in timestamp format
 	 */
 	public Timestamp getRegistration() {
 		return registration;
@@ -150,7 +150,7 @@ public class Car {
 	/**
 	 * Registration field setter method
 	 * 
-	 * @param Timestamp registration
+	 * @param car registration value to be setted
 	 * @return void
 	 */
 	public void setRegistration(final Timestamp registration) {
@@ -160,7 +160,7 @@ public class Car {
 	/**
 	 * Country getter method
 	 * 
-	 * @return String country
+	 * @return car country field value in string format
 	 */
 	public String getCountry() {
 		return country;
@@ -169,7 +169,7 @@ public class Car {
 	/**
 	 * Country field setter method
 	 * 
-	 * @param String country
+	 * @param car country value to be setted
 	 * @return void
 	 */
 	public void setCountry(final String country) {
@@ -179,7 +179,7 @@ public class Car {
 	/**
 	 * Created at getter method
 	 * 
-	 * @return Timestamp created_at
+	 * @return car created_at field in timestamp format
 	 */
 	public Timestamp getCreated_at() {
 		return created_at;
@@ -188,7 +188,8 @@ public class Car {
 	/**
 	 * Created at setter method
 	 * 
-	 * @param Timestamp created_at
+	 * @param car created_at value to be setted
+	 * @return void
 	 */
 	public void setCreated_at(final Timestamp created_at) {
 		this.created_at = created_at;
@@ -198,7 +199,7 @@ public class Car {
 	/**
 	 * Updated at getter method
 	 * 
-	 * @return Timestamp updated_at
+	 * @return car updated_at field in timestamp format
 	 */
 	public Timestamp getUpdated_at() {
 		return updated_at;
@@ -207,7 +208,8 @@ public class Car {
 	/**
 	 * Updated at setter method
 	 * 
-	 * @param updated_at
+	 * @param car updated_at value to be setted
+	 * @return void
 	 */
 	public void setUpdated_at(final Timestamp updated_at) {
 		this.updated_at = updated_at;

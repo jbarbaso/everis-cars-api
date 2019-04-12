@@ -32,9 +32,9 @@ public class CarService {
 	/**
 	 * Search for a car by ID.
 	 * 
-	 * @param Number carId
-	 * @return Car
-	 * @throws CarNotFoundException
+	 * @param carId the car identifier to be searched
+	 * @return the car entity by given ID
+	 * @throws CarNotFoundException when carId doesn't exist
 	 */
 	public Car getCar( final Number carId ) throws CarNotFoundException {
 		final Car car = entityManager.find(Car.class, carId);
@@ -49,8 +49,8 @@ public class CarService {
 	/**
 	 * Create a new car with given Car object
 	 * 
-	 * @param Car car
-	 * @return Car
+	 * @param car the Car object to be created
+	 * @return the created car
 	 */
 	public Car createCar( final Car car ) {
 		entityManager.persist(car);
@@ -58,11 +58,11 @@ public class CarService {
 	}
 	
 	/**
-	 * Update a given car with new Car object 
+	 * Update a given car with new Car object
 	 * 
-	 * @param Car car
-	 * @return Car
-	 * @throws CarNotFoundException
+	 * @param car the car object to be updated. Requires the ID to be updated.
+	 * @return the updated car
+	 * @throws CarNotFoundException when carId doesn't exist
 	 */
 	public Car updateCar ( final Car car ) throws CarNotFoundException {
 		// Throw CarNotFoundException if car doesn't exist.
@@ -74,9 +74,9 @@ public class CarService {
 	/**
 	 * Remove a car by ID
 	 * 
-	 * @param Number carId
+	 * @param carId the car identifier to be deleted
 	 * @return Car
-	 * @throws CarNotFoundException
+	 * @throws CarNotFoundException when carId doesn't exist
 	 */
 	public Car deleteCar ( final Number carId ) throws CarNotFoundException {
 		Car car = getCar(carId);

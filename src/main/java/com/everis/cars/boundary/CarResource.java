@@ -17,9 +17,18 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+/**
+ * Rest resource interface definition for car management
+ */
 @Api(value="cars")
 public interface CarResource {
 
+	/**
+	 * Gets a list with all cars
+	 * 
+	 * @return a car list with all cars in database
+	 * @see com.everis.cars.boundary.CarResource#getAllCars()
+	 */
 	@ApiOperation( 
 		value = "Fetch all Cars",
 		notes = "Fetch all Cars",
@@ -32,6 +41,13 @@ public interface CarResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Car> getAllCars();
 
+	/**
+	 * Create and retrieve the created car
+	 * 
+	 * @param car the car object to be created
+	 * @return response object with the created car
+	 * @see com.everis.cars.boundary.CarResource#createCar(com.everis.cars.entity.Car)
+	 */
 	@ApiOperation( 
 		value = "Create a new car",
 		notes = "Send car object to create a new car",
@@ -53,6 +69,15 @@ public interface CarResource {
 		final Car car
 	);
 
+	/**
+	 * Update a car by ID
+	 * 
+	 * @param carId the car ID to be updated
+	 * @param car the car object to update the registry
+	 * @throws CarNotFoundException
+	 * @return response object with updated car
+	 * @see com.everis.cars.boundary.CarResource#updateCar(long, com.everis.cars.entity.Car)
+	 */
 	@ApiOperation( 
 		value = "Update a car",
 		notes = "Send car object and the car ID in the URI to update a car",
@@ -80,6 +105,14 @@ public interface CarResource {
 			final Car car
 	) throws CarNotFoundException;
 	
+	/**
+	 * Delete a car by ID
+	 * 
+	 * @param carId the car ID to be deleted
+	 * @throws CarNotFoundException
+	 * @return response object with deleted car
+	 * @see com.everis.cars.boundary.CarResource#deleteCar(long)
+	 */
 	@ApiOperation( 
 		value = "Remove a car",
 		notes = "Send car ID in the URI to delete the car. You will get the Deleted car in the response",
@@ -99,6 +132,15 @@ public interface CarResource {
 			final long carId
 	) throws CarNotFoundException;
 
+	
+	/**
+	 * Get a car by ID
+	 * 
+	 * @param carId the car ID to be fetched
+	 * @throws CarNotFoundException
+	 * @return response object with car asked
+	 * @see com.everis.cars.boundary.CarResource#getCar(long)
+	 */
 	@ApiOperation( 
 		value = "Get a car",
 		notes = "Send a car ID to fetch a car",

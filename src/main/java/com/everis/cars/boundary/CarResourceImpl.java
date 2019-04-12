@@ -18,12 +18,25 @@ import com.everis.cars.control.CarService;
 import com.everis.cars.entity.Car;
 import com.everis.cars.exceptions.CarNotFoundException;
 
+/**
+ * Rest resource implementation for car management
+ */
 @Path("cars")
 public class CarResourceImpl implements CarResource {
 
+	/**
+	 * Car Service injected
+	 * 
+	 * @see com.everis.cars.control.EntityManager
+	 */
 	@EJB
 	CarService carService;
 	
+	/**
+	 * UriInfo class injected
+	 * 
+	 * @see javax.ws.rs.core.UriInfo
+	 */
 	@Context 
 	UriInfo uriInfo;
 
@@ -53,12 +66,8 @@ public class CarResourceImpl implements CarResource {
 	public Response updateCar(@PathParam("carId") final long carId, final Car car) throws CarNotFoundException {
 		car.setId(carId);
 		final Car updatedCar = carService.updateCar(car);
-		
-		// TODO: Create the URI from ResourcesUtils class.
-		final String currentId = String.valueOf(updatedCar.getId());
-		final URI uri = uriInfo.getAbsolutePathBuilder().path(currentId).build();
 
-		return Response.created(uri)
+		return Response.ok()
 				.entity(updatedCar)
 				.build();
 	}

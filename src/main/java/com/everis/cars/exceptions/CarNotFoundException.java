@@ -13,7 +13,8 @@ public class CarNotFoundException extends Exception {
 	/**
 	 * Class constructor that receives the custom message
 	 * 
-	 * @param String message
+	 * @param message the exception message to be shown
+	 * @return void
 	 */
 	public CarNotFoundException (final String message) {
 		super(message);
