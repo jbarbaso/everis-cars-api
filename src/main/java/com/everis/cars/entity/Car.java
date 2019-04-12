@@ -3,6 +3,7 @@ package com.everis.cars.entity;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.interceptor.Interceptors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.everis.cars.interceptors.LoggerInterceptor;
+
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiModelProperty.AccessMode;
 
@@ -24,6 +27,7 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
 @Entity
 @Table(name="car")
 @NamedQuery(name = Car.FIND_ALL, query = "select c from Car c")
+@Interceptors(LoggerInterceptor.class)
 public class Car {
 	
 	/**

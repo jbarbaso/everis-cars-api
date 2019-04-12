@@ -3,13 +3,19 @@ package com.everis.cars.control;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.everis.cars.entity.Car;
 import com.everis.cars.exceptions.CarNotFoundException;
+import com.everis.cars.interceptors.LoggerInterceptor;
 
+/**
+ * Service to manage cars
+ */
 @Stateless
+@Interceptors(LoggerInterceptor.class)
 public class CarService {
 	
 	/**

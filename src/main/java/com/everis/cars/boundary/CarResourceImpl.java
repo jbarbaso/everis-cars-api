@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,11 +18,13 @@ import javax.ws.rs.core.UriInfo;
 import com.everis.cars.control.CarService;
 import com.everis.cars.entity.Car;
 import com.everis.cars.exceptions.CarNotFoundException;
+import com.everis.cars.interceptors.LoggerInterceptor;
 
 /**
  * Rest resource implementation for car management
  */
 @Path("cars")
+@Interceptors(LoggerInterceptor.class)
 public class CarResourceImpl implements CarResource {
 
 	/**

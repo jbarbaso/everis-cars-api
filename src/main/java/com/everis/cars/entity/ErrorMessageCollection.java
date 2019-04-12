@@ -3,9 +3,14 @@ package com.everis.cars.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.interceptor.Interceptors;
+
+import com.everis.cars.interceptors.LoggerInterceptor;
+
 /**
  * ErrorMessage collection entity to standardize error responses
  */
+@Interceptors(LoggerInterceptor.class)
 public class ErrorMessageCollection {
 	
 	/**

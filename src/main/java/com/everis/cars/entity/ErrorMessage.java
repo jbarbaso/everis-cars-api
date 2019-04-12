@@ -1,8 +1,13 @@
 package com.everis.cars.entity;
 
+import javax.interceptor.Interceptors;
+
+import com.everis.cars.interceptors.LoggerInterceptor;
+
 /**
  * Entity to standardize the error message response
  */
+@Interceptors(LoggerInterceptor.class)
 public class ErrorMessage {
 
 	/**
