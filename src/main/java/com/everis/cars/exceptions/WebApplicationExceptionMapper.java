@@ -27,7 +27,8 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
 	/**
 	 * Override the default toResponse method to catch {@link WebApplicationException} and format it 
 	 * as a {@link ErrorMessageCollection}. 
-	 * <p>This method will send a 400 status code and the {@link ErrorMessageCollection}</p>.
+	 * <p>This method will send a 400 status code and the {@link ErrorMessageCollection} when
+	 * there are HTTP response errors from application.</p>.
 	 * 
 	 * @param exception the {@link WebApplicationException} given to be formatted
 	 * @return response with 400 status code and {@link ErrorMessageCollection} object

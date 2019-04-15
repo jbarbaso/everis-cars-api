@@ -30,7 +30,8 @@ public class BeanValConstrainViolationExceptionMapper implements ExceptionMapper
 	/**
 	 * Override the default toResponse method to catch the bean validation errors from 
 	 * {@link ConstraintViolationException} and format it as a {@link ErrorMessageCollection}. 
-	 * <p>This method will send a 400 status code and the {@link ErrorMessageCollection}</p>.
+	 * <p>This method will send a 400 status code and the {@link ErrorMessageCollection} when
+	 * object given from REST layer fail on bean validations</p>.
 	 * 
 	 * @param exception the {@link ConstraintViolationException} given to construct the response
 	 * @return response with {@link ErrorMessageCollection} and 400 status code

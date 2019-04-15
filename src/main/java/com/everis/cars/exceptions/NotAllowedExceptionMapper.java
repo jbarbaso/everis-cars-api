@@ -27,7 +27,8 @@ public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedExce
 	/**
 	 * Override the default toResponse method to catch {@link NotAllowedException} and format it 
 	 * as a {@link ErrorMessageCollection}. 
-	 * <p>This method will send a 405 status code and the {@link ErrorMessageCollection}</p>. 
+	 * <p>This method will send a 405 status code and the {@link ErrorMessageCollection} when a
+	 * request at REST layer is not allowed in the system.</p>. 
 	 * 
 	 * @param exception the {@link NotAllowedException} given to be formatted
 	 * @return response with 405 status code and {@link ErrorMessageCollection} object

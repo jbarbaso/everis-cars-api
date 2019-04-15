@@ -27,7 +27,8 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
 	/**
 	 * Override the default toResponse method to catch {@link NotFoundException} and format it 
 	 * as a {@link ErrorMessageCollection}. 
-	 * <p>This method will send a 404 status code and the {@link ErrorMessageCollection}</p>. 
+	 * <p>This method will send a 404 status code and the {@link ErrorMessageCollection} when
+	 * the resource or endpoint requested at REST layer is not found</p>. 
 	 * 
 	 * @param exception the {@link NotFoundException} given to be formatted
 	 * @return response with 404 status code and {@link ErrorMessageCollection} object

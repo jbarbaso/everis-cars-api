@@ -25,8 +25,9 @@ public class CarNotFoundExceptionMapper implements ExceptionMapper<CarNotFoundEx
 
 	/**
 	 * Override the default toResponse method to catch {@link CarNotFoundException} and format it 
-	 * as a {@link ErrorMessageCollection}. 
-	 * <p>This method will send a 404 status code and the {@link ErrorMessageCollection}</p>.
+	 * as a {@link ErrorMessageCollection}.
+	 * <p>This method will send a 404 status code and the {@link ErrorMessageCollection} when the 
+	 * requested {@link Car} from REST layer is not found</p>.
 	 * 
 	 * @param exception the {@link CarNotFoundException} given to be formatted
 	 * @return response with 404 status code and {@link ErrorMessageCollection} object

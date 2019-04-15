@@ -27,7 +27,8 @@ public class PathParamExceptionMapper implements ExceptionMapper<PathParamExcept
 	/**
 	 * Override the default toResponse method to catch {@link PathParamException} and format it 
 	 * as a {@link ErrorMessageCollection}. 
-	 * <p>This method will send a 400 status code and the {@link ErrorMessageCollection}</p>.
+	 * <p>This method will send a 400 status code and the {@link ErrorMessageCollection} when 
+	 * the request with {@link javax.ws.rs.PathParam} is not valid at REST layer.</p>.
 	 * 
 	 * @param exception the {@link PathParamException} given to be formatted
 	 * @return response with 400 status code and {@link ErrorMessageCollection} object
