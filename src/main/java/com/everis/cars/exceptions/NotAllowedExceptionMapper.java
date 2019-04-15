@@ -18,17 +18,19 @@ import com.everis.cars.entity.ErrorMessageCollection;
 public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedException> {
 	
 	/**
-	 * Logger instance
+	 * {@link Logger} instance
 	 * 
 	 * @see org.apache.log4j.Logger
 	 */
 	private static Logger logger = Logger.getLogger(NotAllowedException.class);
 
 	/**
-	 * toResponse override to implement the custom response message 
+	 * Override the default toResponse method to catch {@link NotAllowedException} and format it 
+	 * as a {@link ErrorMessageCollection}. 
+	 * <p>This method will send a 405 status code and the {@link ErrorMessageCollection}</p>. 
 	 * 
-	 * @param exception the exception given to be formatted
-	 * @return response with message object and current status code
+	 * @param exception the {@link NotAllowedException} given to be formatted
+	 * @return response with 405 status code and {@link ErrorMessageCollection} object
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override

@@ -28,7 +28,7 @@ public class ErrorMessage {
 	}
 
 	/**
-	 * Constructor with basic setters to create a new complete instance of ErrorMessage 
+	 * Constructor with basic setters to create a new complete instance of {@link ErrorMessage} 
 	 * 
 	 * @param message the error message value to be setted
 	 * @param code the error code value to be setted

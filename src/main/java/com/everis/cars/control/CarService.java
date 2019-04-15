@@ -19,7 +19,7 @@ import com.everis.cars.interceptors.LoggerInterceptor;
 public class CarService {
 	
 	/**
-	 * Entity Manager
+	 * {@link EntityManager} dependency injected to the service
 	 * 
 	 * @see javax.persistence.EntityManager
 	 */
@@ -27,7 +27,7 @@ public class CarService {
 	private EntityManager entityManager;
 
 	/**
-	 * Get all cars from database
+	 * Get all {@link Car}s from database
 	 * 
 	 * @return List<Car>
 	 */
@@ -36,11 +36,11 @@ public class CarService {
 	}
 
 	/**
-	 * Search for a car by ID.
+	 * Search for a {@link Car} by ID.
 	 * 
 	 * @param carId the car identifier to be searched
 	 * @return the car entity by given ID
-	 * @throws CarNotFoundException when carId doesn't exist
+	 * @throws CarNotFoundException if the specified {@link Car} ID is not found in database
 	 */
 	public Car getCar( final Number carId ) throws CarNotFoundException {
 		final Car car = entityManager.find(Car.class, carId);
@@ -53,7 +53,7 @@ public class CarService {
 	}
 	
 	/**
-	 * Create a new car with given Car object
+	 * Create a new {@link Car} with given {@link Car} object
 	 * 
 	 * @param car the Car object to be created
 	 * @return the created car
@@ -64,11 +64,11 @@ public class CarService {
 	}
 	
 	/**
-	 * Update a given car with new Car object
+	 * Update a given car with new {@link Car} object
 	 * 
 	 * @param car the car object to be updated. Requires the ID to be updated.
 	 * @return the updated car
-	 * @throws CarNotFoundException when carId doesn't exist
+	 * @throws CarNotFoundException if the specified {@link Car} ID is not found in database
 	 */
 	public Car updateCar ( final Car car ) throws CarNotFoundException {
 		// Throw CarNotFoundException if car doesn't exist.
@@ -78,11 +78,11 @@ public class CarService {
 	}
 	
 	/**
-	 * Remove a car by ID
+	 * Remove a {@link Car} by ID
 	 * 
 	 * @param carId the car identifier to be deleted
 	 * @return Car
-	 * @throws CarNotFoundException when carId doesn't exist
+	 * @throws CarNotFoundException if the specified {@link Car} ID is not found in database
 	 */
 	public Car deleteCar ( final Number carId ) throws CarNotFoundException {
 		Car car = getCar(carId);

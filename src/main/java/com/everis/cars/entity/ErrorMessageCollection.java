@@ -14,12 +14,13 @@ import com.everis.cars.interceptors.LoggerInterceptor;
 public class ErrorMessageCollection {
 	
 	/**
-	 * Errors list property
+	 * {@link ErrorMessage} list property
+	 * This list will contain all the {@link ErrorMessage} formatted to API REST response. 
 	 */
 	private List<ErrorMessage> errors = new ArrayList<>();
 
 	/**
-	 * Get errors list
+	 * Get {@link ErrorMessage} list property
 	 * 
 	 * @return the error message collection
 	 */
@@ -28,9 +29,9 @@ public class ErrorMessageCollection {
 	}
 
 	/**
-	 * Set a new errors list
+	 * Set a new {@link ErrorMessage} list to errors property
 	 * 
-	 * @param errors the errors list to be setted
+	 * @param errors the {@link ErrorMessage} list to be setted
 	 * @return void
 	 */
 	public void setErrors(List<ErrorMessage> errors) {
@@ -38,9 +39,9 @@ public class ErrorMessageCollection {
 	}
 	
 	/**
-	 * Add a new error to errors list
+	 * Add a new {@link ErrorMessage} to errors property
 	 * 
-	 * @param error the error to be added to the errors list
+	 * @param error the {@link ErrorMessage} to be added to the errors property
 	 * @return void
 	 */
 	public void addError(final ErrorMessage error) {

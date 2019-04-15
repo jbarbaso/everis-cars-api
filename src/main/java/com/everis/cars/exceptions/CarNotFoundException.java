@@ -13,16 +13,16 @@ public class CarNotFoundException extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Logger instance
+	 * {@link Logger} instance
 	 * 
 	 * @see org.apache.log4j.Logger
 	 */
 	private static Logger logger = Logger.getLogger(CarNotFoundException.class);
 
 	/**
-	 * Class constructor that receives the custom message
+	 * Class constructor that receives the custom message to be shown
 	 * 
-	 * @param message the exception message to be shown
+	 * @param message the {@link Exception} message to be shown
 	 * @return void
 	 */
 	public CarNotFoundException (final String message) {

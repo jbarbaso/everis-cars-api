@@ -7,23 +7,26 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Interceptor to log method start and method ending
+ * This class is only responsible of log the start and ending of the intercepted methods 
+ * and doesn't modify any functionality of this methods.
  */
 public class LoggerInterceptor {
 	
 	/**
-	 * Logger instance
+	 * {@link Logger} instance
 	 * 
 	 * @see org.apache.log4j.Logger
 	 */
 	private Logger logger;
 	
 	/**
-	 * Around method to intercept and log the runtime methods
+	 * Around method to intercept and log the runtime methods intercepted by the @Interceptors annotations.
+	 * It doesn't alter the {@link javax.interceptor.InvocationContext.proceed()} return.
 	 * 
-	 * @param context the context method in runtime
-	 * @return the intercepted method result
+	 * @param context the {@link InvocationContext} target  in runtime
+	 * @return the InvocationContext.proceed() method result
 	 * @throws Exception
+	 * @see javax.interceptor.AroundInvoke
 	 */
 	@AroundInvoke
     public Object intercept(InvocationContext context) throws Exception {

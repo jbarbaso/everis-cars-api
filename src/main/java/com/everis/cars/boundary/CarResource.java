@@ -24,10 +24,11 @@ import io.swagger.annotations.ApiResponses;
 public interface CarResource {
 
 	/**
-	 * Gets a list with all cars
+	 * Get a list with all {@link Car}
+	 * <ul><li>It will response with 200 status code and success message.</li></ul>
 	 * 
-	 * @return a car list with all cars in database
-	 * @see com.everis.cars.boundary.CarResource#getAllCars()
+	 * @return	a {@link Car} list with all cars in database
+	 * @see		com.everis.cars.boundary.CarResource#getAllCars()
 	 */
 	@ApiOperation( 
 		value = "Fetch all Cars",
@@ -42,13 +43,18 @@ public interface CarResource {
 	public List<Car> getAllCars();
 
 	/**
-	 * Create and retrieve the created car
+	 * Create and retrieve the created {@link Car}.
+	 * <ul><li>If {@link Car} object doesn't have bean validation errors 
+	 * it will response with 201 status code and success message.</li>
+	 * <li>If {@link Car} object has bean validation errors they will be catched 
+	 * and mapped from {@link BeanValConstrainViolationExceptionMapper} class
+	 * and it will return a 400 status code and a {@link ErrorMessageCollection}.</li></ul>
 	 * 
-	 * @param car the car object to be created
-	 * @return response object with the created car
-	 * @see com.everis.cars.boundary.CarResource#createCar(com.everis.cars.entity.Car)
+	 * @param	car the {@link Car} object to be created
+	 * @return	response object with the created {@link Car}
+	 * @see		com.everis.cars.boundary.CarResource#createCar(com.everis.cars.entity.Car)
 	 */
-	@ApiOperation( 
+	@ApiOperation(
 		value = "Create a new car",
 		notes = "Send car object to create a new car",
 		response = Response.class, 
@@ -70,13 +76,19 @@ public interface CarResource {
 	);
 
 	/**
-	 * Update a car by ID
+	 * Update a {@link Car} by ID. 
+	 * <ul><li>If {@link Car} exists and {@link Car} object doesn't have bean validation errors, 
+	 * it will response with 200 status code and success message.</li>
+	 * <li>If {@link Car} doesn't exist it will response with 404 status code and not found message.</li>
+	 * <li>If {@link Car} object has bean validation errors they will be catched 
+	 * and mapped from {@link BeanValConstrainViolationExceptionMapper} class
+	 * and it will return a 400 status code and a {@link ErrorMessageCollection}.</li></ul>
 	 * 
-	 * @param carId the car ID to be updated
-	 * @param car the car object to update the registry
-	 * @throws CarNotFoundException
-	 * @return response object with updated car
-	 * @see com.everis.cars.boundary.CarResource#updateCar(long, com.everis.cars.entity.Car)
+	 * @param	carId the {@link Car} ID to be updated
+	 * @param	car the {@link Car} object to update the registry
+	 * @throws	CarNotFoundException if the specified {@link Car} ID is not found in database
+	 * @return	response object with updated {@link Car}
+	 * @see		com.everis.cars.boundary.CarResource#updateCar(long, com.everis.cars.entity.Car)
 	 */
 	@ApiOperation( 
 		value = "Update a car",
@@ -106,12 +118,14 @@ public interface CarResource {
 	) throws CarNotFoundException;
 	
 	/**
-	 * Delete a car by ID
+	 * Delete a {@link Car} by ID
+	 * <ul><li>If {@link Car} exists it will response with 200 status code and success message.</li>
+	 * <li>If {@link Car} doesn't exist it will response with 404 status code and not found message.</li></ul>
 	 * 
-	 * @param carId the car ID to be deleted
-	 * @throws CarNotFoundException
-	 * @return response object with deleted car
-	 * @see com.everis.cars.boundary.CarResource#deleteCar(long)
+	 * @param	carId the {@link Car} ID to be deleted
+	 * @throws	CarNotFoundException if the specified {@link Car} ID is not found in database
+	 * @return	response object with deleted {@link Car}
+	 * @see 	com.everis.cars.boundary.CarResource#deleteCar(long)
 	 */
 	@ApiOperation( 
 		value = "Remove a car",
@@ -134,12 +148,14 @@ public interface CarResource {
 
 	
 	/**
-	 * Get a car by ID
+	 * Get a {@link Car} by ID
+	 * <ul><li>If {@link Car} exists it will response with 200 status code and success message.</li>
+	 * <li>If {@link Car} doesn't exist it will response with 404 status code and not found message.</li></ul>
 	 * 
-	 * @param carId the car ID to be fetched
-	 * @throws CarNotFoundException
-	 * @return response object with car asked
-	 * @see com.everis.cars.boundary.CarResource#getCar(long)
+	 * @param	carId the {@link Car} ID to be fetched
+	 * @throws	CarNotFoundException if the specified {@link Car} ID is not found in database
+	 * @return	response object with {@link Car} asked
+	 * @see 	com.everis.cars.boundary.CarResource#getCar(long)
 	 */
 	@ApiOperation( 
 		value = "Get a car",

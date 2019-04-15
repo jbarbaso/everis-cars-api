@@ -18,17 +18,19 @@ import com.everis.cars.entity.ErrorMessageCollection;
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
 
 	/**
-	 * Logger instance
+	 * {@link Logger} instance
 	 * 
 	 * @see org.apache.log4j.Logger
 	 */
 	private static Logger logger = Logger.getLogger(NotFoundException.class);
 	
 	/**
-	 * toResponse override to implement the custom response message 
+	 * Override the default toResponse method to catch {@link NotFoundException} and format it 
+	 * as a {@link ErrorMessageCollection}. 
+	 * <p>This method will send a 404 status code and the {@link ErrorMessageCollection}</p>. 
 	 * 
-	 * @param exception the exception given to be formatted
-	 * @return response with message object and current status code
+	 * @param exception the {@link NotFoundException} given to be formatted
+	 * @return response with 404 status code and {@link ErrorMessageCollection} object
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override

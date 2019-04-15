@@ -21,17 +21,19 @@ import com.everis.cars.interceptors.LoggerInterceptor;
 public class BeanValConstrainViolationExceptionMapper implements ExceptionMapper<ConstraintViolationException>  {
 
 	/**
-	 * Logger instance
+	 * {@link Logger} instance
 	 * 
 	 * @see org.apache.log4j.Logger
 	 */
 	private static Logger logger = Logger.getLogger(BeanValConstrainViolationExceptionMapper.class);
 	
 	/**
-	 * toResponse override to implement the custom response message 
+	 * Override the default toResponse method to catch the bean validation errors from 
+	 * {@link ConstraintViolationException} and format it as a {@link ErrorMessageCollection}. 
+	 * <p>This method will send a 400 status code and the {@link ErrorMessageCollection}</p>.
 	 * 
-	 * @param exception the exception given to be formatted
-	 * @return response with message object and current status code
+	 * @param exception the {@link ConstraintViolationException} given to construct the response
+	 * @return response with {@link ErrorMessageCollection} and 400 status code
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override
@@ -42,10 +44,11 @@ public class BeanValConstrainViolationExceptionMapper implements ExceptionMapper
 	}
 	
 	/**
-	 * Prepare error message collection with catched exceptions
+	 * Prepare {@link ErrorMessageCollection} and transform the {@link ConstraintViolationException} 
+	 * messages to {@link ErrorMessage} format.
 	 * 
-	 * @param exception the exception to be formated
-	 * @return errors list
+	 * @param exception the {@link ConstraintViolationException} to be formatted
+	 * @return errors {@link ErrorMessageCollection} with {@link ErrorMessage} added from {@link ConstraintViolationException}
 	 */
 	private ErrorMessageCollection prepareMessage(final ConstraintViolationException exception) {
 		ErrorMessageCollection errors = new ErrorMessageCollection();
