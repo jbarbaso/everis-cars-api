@@ -2,10 +2,9 @@ package com.everis.cars.control;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import com.everis.cars.entity.Car;
 import com.everis.cars.exceptions.CarNotFoundException;
@@ -18,13 +17,8 @@ import com.everis.cars.interceptors.LoggerInterceptor;
 @Interceptors(LoggerInterceptor.class)
 public class CarService {
 	
-	/**
-	 * {@link EntityManager} dependency injected to the service
-	 * 
-	 * @see javax.persistence.EntityManager
-	 */
-	@PersistenceContext(unitName="em_postgres")
-	private EntityManager entityManager;
+	@EJB
+	private PersistenceService persistenceService;
 
 	/**
 	 * Get all {@link Car}s from database
@@ -32,7 +26,7 @@ public class CarService {
 	 * @return List<Car>
 	 */
 	public List<Car> getCars() {
-		return entityManager.createNamedQuery(Car.FIND_ALL, Car.class).getResultList();
+		return persistenceService.findAll(Car.class);
 	}
 
 	/**
@@ -43,7 +37,7 @@ public class CarService {
 	 * @throws CarNotFoundException if the specified {@link Car} ID is not found in database
 	 */
 	public Car getCar( final Number carId ) throws CarNotFoundException {
-		final Car car = entityManager.find(Car.class, carId);
+		final Car car = persistenceService.find(Car.class, carId);
 
 		if (car == null) {
 	        throw new CarNotFoundException("Car with ID "+carId+" not found");
@@ -59,8 +53,7 @@ public class CarService {
 	 * @return the created car
 	 */
 	public Car createCar( final Car car ) {
-		entityManager.persist(car);
-		return car;
+		return persistenceService.create(car);
 	}
 	
 	/**
@@ -74,7 +67,7 @@ public class CarService {
 		// Throw CarNotFoundException if car doesn't exist.
 		getCar(car.getId());
 
-		return entityManager.merge(car);
+		return persistenceService.update(car);
 	}
 	
 	/**
@@ -86,8 +79,8 @@ public class CarService {
 	 */
 	public Car deleteCar ( final Number carId ) throws CarNotFoundException {
 		Car car = getCar(carId);
-		
-		entityManager.remove(car);
+
+		persistenceService.delete(car);
 		return car;
 	}
 }
