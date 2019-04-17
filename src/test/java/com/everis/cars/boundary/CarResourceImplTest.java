@@ -1,12 +1,14 @@
 package com.everis.cars.boundary;
 
+import static com.everis.cars.utils.TestUtils.mockCar;
+import static com.everis.cars.utils.TestUtils.mockCarList;
+import static com.everis.cars.utils.TestUtils.mockEmptyCarList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
@@ -27,22 +30,33 @@ import com.everis.cars.exceptions.CarNotFoundException;
 import com.everis.cars.exceptions.CarNotFoundExceptionMapper;
 
 /**
- * CarResource testing class methods
+ * CarResource testing class methods to create, read, update and delete {@link Car} objects
+ * by http requests and return the corresponding response. 
  */
 public class CarResourceImplTest {
 	
+	/**
+	 * We use the {@link Rule} annotation instead of {@link RunWith} annotation
+	 * to indicate the mockito runner
+	 */
 	@Rule
 	public MockitoRule mockitoRule = MockitoJUnit.rule();
 
+	/**
+	 * {@link CarResourceImpl} instance with mocks injection
+	 */
 	@InjectMocks
 	CarResourceImpl carResource;
 
+	/**
+	 * {@link CarService} mocked instance
+	 */
 	@Mock
 	CarService carService;
-
-	@Mock
-	Car carMock;
 	
+	/**
+	 * {@link UriInfo} mocked instance
+	 */
 	@Mock
 	UriInfo uriInfo;
 	
@@ -278,42 +292,4 @@ public class CarResourceImplTest {
 		}
 	}
 	
-	/**
-	 * Helper method to quickly create and return a {@link Car} object
-	 * 
-	 * @param brand string parameter with {@link Car} brand info
-	 * @param registration timestamp parameter with {@link Car} registration info
-	 * @param country string parameter with {@link Car} country info
-	 * @return {@link Car} mocked object
-	 */
-	protected Car mockCar(String brand, Timestamp registration, String country) {
-		final Car car = new Car();
-		car.setBrand(brand);
-		car.setRegistration(registration);
-		car.setCountry(country);
-
-		return car;
-	}
-
-	/**
-	 * Helper method to quickly create and return a mock of a {@link List} with {@link Car}s 
-	 * 
-	 * @return {@link List} of {@link Car}s mocked
-	 */
-	protected List<Car> mockCarList(){
-		final List<Car> cars = new ArrayList<>();
-		cars.add(mockCar("BMW", new Timestamp(new Date().getTime()), "Spain"));
-		cars.add(mockCar("MERCEDES", new Timestamp(new Date().getTime()), "Spain"));
-
-		return cars;
-	}
-	
-	/**
-	 * Helper method to quickly create and return an empty {@link List} of {@link Car}s 
-	 * 
-	 * @return an empty {@link List} of {@link Car}s
-	 */
-	protected List<Car> mockEmptyCarList(){
-		return new ArrayList<>();
-	}
 }
