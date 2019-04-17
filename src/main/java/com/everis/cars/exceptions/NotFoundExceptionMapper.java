@@ -12,7 +12,8 @@ import com.everis.cars.entity.ErrorMessage;
 import com.everis.cars.entity.ErrorMessageCollection;
 
 /**
- * ExceptionMapper to catch NotFoundException exceptions and standardize exception responses
+ * ExceptionMapper to catch NotFoundException exceptions and standardize
+ * exception responses
  */
 @Provider
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
@@ -23,15 +24,20 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
 	 * @see org.apache.log4j.Logger
 	 */
 	private static Logger logger = Logger.getLogger(NotFoundException.class);
-	
+
 	/**
-	 * Override the default toResponse method to catch {@link NotFoundException} and format it 
-	 * as a {@link ErrorMessageCollection}. 
-	 * <p>This method will send a 404 status code and the {@link ErrorMessageCollection} when
-	 * the resource or endpoint requested at REST layer is not found</p>. 
+	 * Override the default toResponse method to catch {@link NotFoundException} and
+	 * format it as a {@link ErrorMessageCollection}.
+	 * <p>
+	 * This method will send a 404 status code and the
+	 * {@link ErrorMessageCollection} when the resource or endpoint requested at
+	 * REST layer is not found
+	 * </p>
+	 * .
 	 * 
 	 * @param exception the {@link NotFoundException} given to be formatted
-	 * @return response with 404 status code and {@link ErrorMessageCollection} object
+	 * @return response with 404 status code and {@link ErrorMessageCollection}
+	 *         object
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override
@@ -39,10 +45,8 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
 		logger.error(exception.getMessage());
 		ErrorMessageCollection errors = new ErrorMessageCollection();
 		errors.addError(new ErrorMessage(exception.getMessage(), 404));
-		
-		return Response.status(Status.NOT_FOUND)
-				.entity(errors)
-				.build();
+
+		return Response.status(Status.NOT_FOUND).entity(errors).build();
 	}
 
 }

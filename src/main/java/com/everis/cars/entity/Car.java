@@ -25,74 +25,74 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  * Car entity model
  */
 @Entity
-@Table(name="car")
+@Table(name = "car")
 @NamedQuery(name = Car.FIND_ALL, query = "select c from Car c")
 @Interceptors(LoggerInterceptor.class)
 public class Car {
-	
+
 	/**
 	 * Constant defined for find all cars named query
 	 */
 	public static final String FIND_ALL = "Car.findAll";
-	
+
 	/**
-	 * Entity identifier 
+	 * Entity identifier
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", updatable = false, nullable = false)
-	@ApiModelProperty(value = "Car ID", accessMode= AccessMode.READ_ONLY, hidden = true)
+	@ApiModelProperty(value = "Car ID", accessMode = AccessMode.READ_ONLY, hidden = true)
 	protected Number id;
 
 	/**
 	 * Brand car string field
 	 */
-	@Column(name = "brand", nullable = false, length=50)
-	@NotNull(message="Brand field can't be empty.")
-	@Size(min=2, max=50, message="Brand field must have a length from 2 to 50 characterers.")
+	@Column(name = "brand", nullable = false, length = 50)
+	@NotNull(message = "Brand field can't be empty.")
+	@Size(min = 2, max = 50, message = "Brand field must have a length from 2 to 50 characterers.")
 	protected String brand;
 
 	/**
 	 * Registration car timestamp field
 	 */
 	@Column(name = "registration", nullable = false)
-	@NotNull(message="Registration field for Car can't be empty.")
+	@NotNull(message = "Registration field for Car can't be empty.")
 	protected Timestamp registration;
 
 	/**
 	 * Country car string field
 	 */
-	@Column(name = "country", nullable = false, length=100)
-	@NotNull(message="Country field for Car can't be empty.")
-	@Size(min=2, max=100, message="Country field must have a length from 2 to 100 characterers.")
+	@Column(name = "country", nullable = false, length = 100)
+	@NotNull(message = "Country field for Car can't be empty.")
+	@Size(min = 2, max = 100, message = "Country field must have a length from 2 to 100 characterers.")
 	protected String country;
 
 	/**
 	 * Created timestamp field
 	 */
 	@Column(name = "created_at", updatable = false, nullable = false)
-	@ApiModelProperty(value = "Created time", accessMode= AccessMode.READ_ONLY)
+	@ApiModelProperty(value = "Created time", accessMode = AccessMode.READ_ONLY)
 	protected Timestamp created_at;
 
 	/**
 	 * Last Update timestamp field
 	 */
 	@Column(name = "updated_at", nullable = false)
-	@ApiModelProperty(value = "Last updated time", accessMode= AccessMode.READ_ONLY)
+	@ApiModelProperty(value = "Last updated time", accessMode = AccessMode.READ_ONLY)
 	protected Timestamp updated_at;
-	
+
 	/**
 	 * Add current timestamp values to created_at and updated_at before persist.
 	 * 
 	 * @return void
 	 */
 	@PrePersist
-	protected void onCreate () {
+	protected void onCreate() {
 		final Date date = new Date();
 		created_at = new Timestamp(date.getTime());
 		updated_at = new Timestamp(date.getTime());
 	}
-	
+
 	/**
 	 * Add current timestamp value to updated_at before update.
 	 * 
@@ -103,7 +103,7 @@ public class Car {
 		final Date date = new Date();
 		updated_at = new Timestamp(date.getTime());
 	}
-	
+
 	/**
 	 * ID getter mehtod
 	 * 
@@ -150,7 +150,7 @@ public class Car {
 	public Timestamp getRegistration() {
 		return registration;
 	}
-	
+
 	/**
 	 * Registration field setter method
 	 * 
@@ -199,7 +199,6 @@ public class Car {
 		this.created_at = created_at;
 	}
 
-	
 	/**
 	 * Updated at getter method
 	 * 

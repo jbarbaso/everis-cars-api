@@ -20,159 +20,115 @@ import io.swagger.annotations.ApiResponses;
 /**
  * Rest resource interface definition for car management
  */
-@Api(value="cars")
+@Api(value = "cars")
 public interface CarResource {
 
 	/**
 	 * Get a list with all {@link Car}
-	 * <ul><li>It will response with 200 status code and success message.</li></ul>
+	 * <ul>
+	 * <li>It will response with 200 status code and success message.</li>
+	 * </ul>
 	 * 
-	 * @return	a {@link Car} list with all cars in database
-	 * @see		com.everis.cars.boundary.CarResource#getAllCars()
+	 * @return a {@link Car} list with all cars in database
+	 * @see com.everis.cars.boundary.CarResource#getAllCars()
 	 */
-	@ApiOperation( 
-		value = "Fetch all Cars",
-		notes = "Fetch all Cars",
-		response = List.class, 
-		responseContainer = "List"
-	)
-	@ApiResponses(value = { 
-		@ApiResponse(code = 200, message = "Successfully fetched car collection")
-	})
+	@ApiOperation(value = "Fetch all Cars", notes = "Fetch all Cars", response = List.class, responseContainer = "List")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully fetched car collection") })
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Car> getAllCars();
 
 	/**
 	 * Create and retrieve the created {@link Car}.
-	 * <ul><li>If {@link Car} object doesn't have bean validation errors 
-	 * it will response with 201 status code and success message.</li>
-	 * <li>If {@link Car} object has bean validation errors they will be catched 
-	 * and mapped from {@link BeanValConstrainViolationExceptionMapper} class
-	 * and it will return a 400 status code and a {@link ErrorMessageCollection}.</li></ul>
+	 * <ul>
+	 * <li>If {@link Car} object doesn't have bean validation errors it will
+	 * response with 201 status code and success message.</li>
+	 * <li>If {@link Car} object has bean validation errors they will be catched and
+	 * mapped from {@link BeanValConstrainViolationExceptionMapper} class and it
+	 * will return a 400 status code and a {@link ErrorMessageCollection}.</li>
+	 * </ul>
 	 * 
-	 * @param	car the {@link Car} object to be created
-	 * @return	response object with the created {@link Car}
-	 * @see		com.everis.cars.boundary.CarResource#createCar(com.everis.cars.entity.Car)
+	 * @param car the {@link Car} object to be created
+	 * @return response object with the created {@link Car}
+	 * @see com.everis.cars.boundary.CarResource#createCar(com.everis.cars.entity.Car)
 	 */
-	@ApiOperation(
-		value = "Create a new car",
-		notes = "Send car object to create a new car",
-		response = Response.class, 
-		responseContainer = "Set"
-	)
-	@ApiResponses(value = { 
-		@ApiResponse(code = 201, message = "Successfully created car"),
-		@ApiResponse(code = 400, message = "Bad Request")
-	})
+	@ApiOperation(value = "Create a new car", notes = "Send car object to create a new car", response = Response.class, responseContainer = "Set")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Successfully created car"),
+			@ApiResponse(code = 400, message = "Bad Request") })
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createCar(
-		@ApiParam(
-			value = "Car object to create a new car",
-			required = true
-		)
-		@Valid 
-		final Car car
-	);
+			@ApiParam(value = "Car object to create a new car", required = true) @Valid final Car car);
 
 	/**
-	 * Update a {@link Car} by ID. 
-	 * <ul><li>If {@link Car} exists and {@link Car} object doesn't have bean validation errors, 
-	 * it will response with 200 status code and success message.</li>
-	 * <li>If {@link Car} doesn't exist it will response with 404 status code and not found message.</li>
-	 * <li>If {@link Car} object has bean validation errors they will be catched 
-	 * and mapped from {@link BeanValConstrainViolationExceptionMapper} class
-	 * and it will return a 400 status code and a {@link ErrorMessageCollection}.</li></ul>
+	 * Update a {@link Car} by ID.
+	 * <ul>
+	 * <li>If {@link Car} exists and {@link Car} object doesn't have bean validation
+	 * errors, it will response with 200 status code and success message.</li>
+	 * <li>If {@link Car} doesn't exist it will response with 404 status code and
+	 * not found message.</li>
+	 * <li>If {@link Car} object has bean validation errors they will be catched and
+	 * mapped from {@link BeanValConstrainViolationExceptionMapper} class and it
+	 * will return a 400 status code and a {@link ErrorMessageCollection}.</li>
+	 * </ul>
 	 * 
-	 * @param	carId the {@link Car} ID to be updated
-	 * @param	car the {@link Car} object to update the registry
-	 * @throws	CarNotFoundException if the specified {@link Car} ID is not found in database
-	 * @return	response object with updated {@link Car}
-	 * @see		com.everis.cars.boundary.CarResource#updateCar(long, com.everis.cars.entity.Car)
+	 * @param carId the {@link Car} ID to be updated
+	 * @param car   the {@link Car} object to update the registry
+	 * @throws CarNotFoundException if the specified {@link Car} ID is not found in
+	 *                              database
+	 * @return response object with updated {@link Car}
+	 * @see com.everis.cars.boundary.CarResource#updateCar(long,
+	 *      com.everis.cars.entity.Car)
 	 */
-	@ApiOperation( 
-		value = "Update a car",
-		notes = "Send car object and the car ID in the URI to update a car",
-		response = Response.class,
-		responseContainer = "Set"
-	)
-	@ApiResponses(value = { 
-		@ApiResponse(code = 200, message = "Successfully updated car"),
-		@ApiResponse(code = 400, message = "Bad Request"),
-		@ApiResponse(code = 404, message = "Car not Found")
-	})
+	@ApiOperation(value = "Update a car", notes = "Send car object and the car ID in the URI to update a car", response = Response.class, responseContainer = "Set")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully updated car"),
+			@ApiResponse(code = 400, message = "Bad Request"), @ApiResponse(code = 404, message = "Car not Found") })
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateCar(
-			@ApiParam(
-				value = "Car ID to be updated",
-				required = true
-			) 
-			final long carId,
-			@ApiParam(
-				value = "Car object with new data to be updated",
-				required = true
-			)
-			@Valid
-			final Car car
-	) throws CarNotFoundException;
-	
+	public Response updateCar(@ApiParam(value = "Car ID to be updated", required = true) final long carId,
+			@ApiParam(value = "Car object with new data to be updated", required = true) @Valid final Car car)
+			throws CarNotFoundException;
+
 	/**
 	 * Delete a {@link Car} by ID
-	 * <ul><li>If {@link Car} exists it will response with 200 status code and success message.</li>
-	 * <li>If {@link Car} doesn't exist it will response with 404 status code and not found message.</li></ul>
+	 * <ul>
+	 * <li>If {@link Car} exists it will response with 200 status code and success
+	 * message.</li>
+	 * <li>If {@link Car} doesn't exist it will response with 404 status code and
+	 * not found message.</li>
+	 * </ul>
 	 * 
-	 * @param	carId the {@link Car} ID to be deleted
-	 * @throws	CarNotFoundException if the specified {@link Car} ID is not found in database
-	 * @return	response object with deleted {@link Car}
-	 * @see 	com.everis.cars.boundary.CarResource#deleteCar(long)
+	 * @param carId the {@link Car} ID to be deleted
+	 * @throws CarNotFoundException if the specified {@link Car} ID is not found in
+	 *                              database
+	 * @return response object with deleted {@link Car}
+	 * @see com.everis.cars.boundary.CarResource#deleteCar(long)
 	 */
-	@ApiOperation( 
-		value = "Remove a car",
-		notes = "Send car ID in the URI to delete the car. You will get the Deleted car in the response",
-		response = Response.class,
-		responseContainer = "Set"
-	)
-	@ApiResponses(value = { 
-		@ApiResponse(code = 200, message = "Successfully deleted car"),
-		@ApiResponse(code = 404, message = "Car not Found")
-	})
+	@ApiOperation(value = "Remove a car", notes = "Send car ID in the URI to delete the car. You will get the Deleted car in the response", response = Response.class, responseContainer = "Set")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully deleted car"),
+			@ApiResponse(code = 404, message = "Car not Found") })
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCar(
-			@ApiParam(
-				value = "Car ID to be deleted",
-				required = true
-			) 
-			final long carId
-	) throws CarNotFoundException;
+	public Response deleteCar(@ApiParam(value = "Car ID to be deleted", required = true) final long carId)
+			throws CarNotFoundException;
 
-	
 	/**
 	 * Get a {@link Car} by ID
-	 * <ul><li>If {@link Car} exists it will response with 200 status code and success message.</li>
-	 * <li>If {@link Car} doesn't exist it will response with 404 status code and not found message.</li></ul>
+	 * <ul>
+	 * <li>If {@link Car} exists it will response with 200 status code and success
+	 * message.</li>
+	 * <li>If {@link Car} doesn't exist it will response with 404 status code and
+	 * not found message.</li>
+	 * </ul>
 	 * 
-	 * @param	carId the {@link Car} ID to be fetched
-	 * @throws	CarNotFoundException if the specified {@link Car} ID is not found in database
-	 * @return	response object with {@link Car} asked
-	 * @see 	com.everis.cars.boundary.CarResource#getCar(long)
+	 * @param carId the {@link Car} ID to be fetched
+	 * @throws CarNotFoundException if the specified {@link Car} ID is not found in
+	 *                              database
+	 * @return response object with {@link Car} asked
+	 * @see com.everis.cars.boundary.CarResource#getCar(long)
 	 */
-	@ApiOperation( 
-		value = "Get a car",
-		notes = "Send a car ID to fetch a car",
-		response = Response.class,
-		responseContainer = "Set"
-	)
-	@ApiResponses(value = { 
-		@ApiResponse(code = 200, message = "Successfully fetched car"),
-		@ApiResponse(code = 404, message = "Car not Found")
-	})
+	@ApiOperation(value = "Get a car", notes = "Send a car ID to fetch a car", response = Response.class, responseContainer = "Set")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully fetched car"),
+			@ApiResponse(code = 404, message = "Car not Found") })
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCar(
-			@ApiParam(
-				value = "Car ID to be fetched",
-				required = true
-			)
-			final long carId
-	) throws CarNotFoundException;
+	public Response getCar(@ApiParam(value = "Car ID to be fetched", required = true) final long carId)
+			throws CarNotFoundException;
 }

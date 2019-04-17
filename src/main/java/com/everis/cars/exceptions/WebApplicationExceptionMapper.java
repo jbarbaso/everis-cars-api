@@ -12,11 +12,12 @@ import com.everis.cars.entity.ErrorMessage;
 import com.everis.cars.entity.ErrorMessageCollection;
 
 /**
- * ExceptionMapper to catch WebApplicationException exceptions and standardize exception responses
+ * ExceptionMapper to catch WebApplicationException exceptions and standardize
+ * exception responses
  */
 @Provider
 public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplicationException> {
-	
+
 	/**
 	 * {@link Logger} instance
 	 * 
@@ -25,13 +26,19 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
 	private static Logger logger = Logger.getLogger(WebApplicationException.class);
 
 	/**
-	 * Override the default toResponse method to catch {@link WebApplicationException} and format it 
-	 * as a {@link ErrorMessageCollection}. 
-	 * <p>This method will send a 400 status code and the {@link ErrorMessageCollection} when
-	 * there are HTTP response errors from application.</p>.
+	 * Override the default toResponse method to catch
+	 * {@link WebApplicationException} and format it as a
+	 * {@link ErrorMessageCollection}.
+	 * <p>
+	 * This method will send a 400 status code and the
+	 * {@link ErrorMessageCollection} when there are HTTP response errors from
+	 * application.
+	 * </p>
+	 * .
 	 * 
 	 * @param exception the {@link WebApplicationException} given to be formatted
-	 * @return response with 400 status code and {@link ErrorMessageCollection} object
+	 * @return response with 400 status code and {@link ErrorMessageCollection}
+	 *         object
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override
@@ -39,9 +46,7 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
 		logger.error(exception.getMessage());
 		ErrorMessageCollection errors = new ErrorMessageCollection();
 		errors.addError(new ErrorMessage(exception.getMessage(), Status.BAD_REQUEST.getStatusCode()));
-		
-		return Response.status(Status.BAD_REQUEST)
-				.entity(errors)
-				.build();
+
+		return Response.status(Status.BAD_REQUEST).entity(errors).build();
 	}
 }

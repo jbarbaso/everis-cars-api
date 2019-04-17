@@ -35,13 +35,13 @@ public class CarResourceImpl implements CarResource {
 	 */
 	@EJB
 	CarService carService;
-	
+
 	/**
 	 * UriInfo class injected
 	 * 
 	 * @see javax.ws.rs.core.UriInfo
 	 */
-	@Context 
+	@Context
 	UriInfo uriInfo;
 
 	@Override
@@ -54,13 +54,9 @@ public class CarResourceImpl implements CarResource {
 	@POST
 	public Response createCar(final Car car) {
 		final Car newCar = carService.createCar(car);
-		final URI uri = ResourceUtils.getCreatedResourceUriWithIdPath(
-				String.valueOf(newCar.getId()), 
-				uriInfo);
+		final URI uri = ResourceUtils.getCreatedResourceUriWithIdPath(String.valueOf(newCar.getId()), uriInfo);
 
-		return Response.created(uri)
-				.entity(newCar)
-				.build();
+		return Response.created(uri).entity(newCar).build();
 	}
 
 	@Override
@@ -70,9 +66,7 @@ public class CarResourceImpl implements CarResource {
 		car.setId(carId);
 		final Car updatedCar = carService.updateCar(car);
 
-		return Response.ok()
-				.entity(updatedCar)
-				.build();
+		return Response.ok().entity(updatedCar).build();
 	}
 
 	@Override
@@ -80,10 +74,8 @@ public class CarResourceImpl implements CarResource {
 	@Path("/{carId}")
 	public Response deleteCar(@PathParam("carId") final long carId) throws CarNotFoundException {
 		final Car deletedCar = carService.deleteCar(carId);
-		
-		return Response.ok()
-				.entity(deletedCar)
-				.build();
+
+		return Response.ok().entity(deletedCar).build();
 	}
 
 	@Override
@@ -91,10 +83,8 @@ public class CarResourceImpl implements CarResource {
 	@Path("/{carId}")
 	public Response getCar(@PathParam("carId") final long carId) throws CarNotFoundException {
 		final Car car = carService.getCar(carId);
-				
-		return Response.ok()
-				.entity(car)
-				.build();
+
+		return Response.ok().entity(car).build();
 	}
 
 }
