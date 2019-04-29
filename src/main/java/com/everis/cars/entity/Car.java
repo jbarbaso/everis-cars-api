@@ -9,11 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.everis.cars.interceptors.LoggerInterceptor;
@@ -26,7 +29,8 @@ import io.swagger.annotations.ApiModelProperty.AccessMode;
  */
 @Entity
 @Table(name = "car")
-@NamedQuery(name = Car.FIND_ALL, query = "select c from Car c")
+@NamedQueries({ @NamedQuery(name = Car.FIND_ALL, query = "SELECT c FROM Car c"),
+		@NamedQuery(name = Car.FIND_INACTIVE_CARS, query = "SELECT c FROM Car c WHERE c.status = false") })
 @Interceptors(LoggerInterceptor.class)
 public class Car {
 
@@ -34,6 +38,11 @@ public class Car {
 	 * Constant defined for find all cars named query
 	 */
 	public static final String FIND_ALL = "Car.findAll";
+
+	/**
+	 * Constant defined for find all cars named query
+	 */
+	public static final String FIND_INACTIVE_CARS = "Car.findInactiveCars";
 
 	/**
 	 * Entity identifier
@@ -66,6 +75,13 @@ public class Car {
 	@NotNull(message = "Country field for Car can't be empty.")
 	@Size(min = 2, max = 100, message = "Country field must have a length from 2 to 100 characterers.")
 	protected String country;
+
+	/**
+	 * Status car boolean field
+	 */
+	@Column(name = "status", nullable = false, columnDefinition = "BOOL default 'FALSE' NOT NULL")
+	@NotNull(message = "Status field for Car can't be empty.")
+	protected boolean status = false;
 
 	/**
 	 * Created timestamp field
@@ -178,6 +194,25 @@ public class Car {
 	 */
 	public void setCountry(final String country) {
 		this.country = country;
+	}
+
+	/**
+	 * Status getter method
+	 * 
+	 * @return car status field value in boolean format
+	 */
+	public boolean getStatus() {
+		return status;
+	}
+
+	/**
+	 * Status field setter method
+	 * 
+	 * @param car status value to be setted
+	 * @return void
+	 */
+	public void setStatus(final boolean status) {
+		this.status = status;
 	}
 
 	/**
