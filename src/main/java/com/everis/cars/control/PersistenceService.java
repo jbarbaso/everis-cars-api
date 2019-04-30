@@ -43,6 +43,19 @@ public class PersistenceService {
 	}
 
 	/**
+	 * Fetch all registries of given type by given named query and return a list
+	 * with them
+	 * 
+	 * @param namedQueryName Named query to be executed
+	 * @param type           entity class to execute the named query
+	 * @return list with all registries found by named query
+	 */
+	public <T> List<T> findByNamedQuery(final String namedQueryName, final Class<T> type) {
+		final TypedQuery<T> query = entityManager.createNamedQuery(namedQueryName, type);
+		return query.getResultList();
+	}
+
+	/**
 	 * Fetch object from database by given type and ID
 	 * 
 	 * @param type the object class type

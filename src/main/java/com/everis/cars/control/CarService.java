@@ -30,6 +30,15 @@ public class CarService {
 	}
 
 	/**
+	 * Get all inactive {@link Car}s from database
+	 * 
+	 * @return List<Car> containing inactive {@link Car}s
+	 */
+	public List<Car> getInactivaCars() {
+		return persistenceService.findByNamedQuery(Car.FIND_INACTIVE_CARS, Car.class);
+	}
+
+	/**
 	 * Search for a {@link Car} by ID.
 	 * 
 	 * @param carId the car identifier to be searched
