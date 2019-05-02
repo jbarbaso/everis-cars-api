@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -95,7 +96,7 @@ public class CarServiceTest  {
 	@Test
 	public void GettingCar_WithExistingCarIdParam_ReturnsCarCorrectly () throws CarNotFoundException {
 		final long carId = 1;
-		final Car car = mockCar("BMW", new Timestamp(new Date().getTime()), "Spain");
+		final Car car = mockCar("BMW", LocalDateTime.now(), "Spain");
 		
 		// mock persistenceService find method
 		when(persistenceService.find(Car.class, carId)).thenReturn(car);
@@ -132,7 +133,7 @@ public class CarServiceTest  {
 	 */
 	@Test
 	public void CreatingCar_CarValidObject_ReturnsCarCorrectly() {
-		final Car car = mockCar("BMW", new Timestamp(new Date().getTime()), "Spain");
+		final Car car = mockCar("BMW", LocalDateTime.now(), "Spain");
 		
 		// mock persistenceService create
 		when(persistenceService.create(car)).thenReturn(car);
@@ -161,7 +162,7 @@ public class CarServiceTest  {
 	@Test(expected=Throwable.class)
 	public void CreatingCar_CarNonValidObject_ConstraintViolationException() {
 		// mock a Car with invalid values
-		final Car car = mockCar("", new Timestamp(new Date().getTime()), "Spain");
+		final Car car = mockCar("", LocalDateTime.now(), "Spain");
 		
 		// mock persistenceService create
 		when(persistenceService.create(car)).thenThrow(Throwable.class);
@@ -179,7 +180,7 @@ public class CarServiceTest  {
 	@Test
 	public void UpdatingCar_ExistingCarAndValidObject_ReturnsCarCorrectly() throws CarNotFoundException {
 		final long carId = 1;
-		final Car car = mockCar("BMW", new Timestamp(new Date().getTime()), "Spain");
+		final Car car = mockCar("BMW", LocalDateTime.now(), "Spain");
 		car.setId(carId);
 		
 		// mock persistenceService find method
@@ -209,7 +210,7 @@ public class CarServiceTest  {
 	@Test(expected=CarNotFoundException.class)
 	public void UpdatingCar_NonExistingCarAndValidObject_ReturnsCarCorrectly() throws CarNotFoundException {
 		final long carId = 1;
-		final Car car = mockCar("BMW", new Timestamp(new Date().getTime()), "Spain");
+		final Car car = mockCar("BMW", LocalDateTime.now(), "Spain");
 		car.setId(carId);
 		
 		// use carService.createCar method
@@ -225,7 +226,7 @@ public class CarServiceTest  {
 	@Test
 	public void DeletingCar_WithExistingCarIdParam_RemoveCarAndReturnsCarCorrectly () throws CarNotFoundException {
 		final long carId = 1;
-		final Car car = mockCar("BMW", new Timestamp(new Date().getTime()), "Spain");
+		final Car car = mockCar("BMW", LocalDateTime.now(), "Spain");
 		car.setId(carId);
 		
 		// mock persistenceService find method
