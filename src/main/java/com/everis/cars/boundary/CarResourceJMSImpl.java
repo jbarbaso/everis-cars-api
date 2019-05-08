@@ -15,7 +15,7 @@ import com.everis.cars.control.CarService;
 import com.everis.cars.entity.Car;
 import com.everis.cars.exceptions.CarNotFoundException;
 import com.everis.cars.interceptors.LoggerInterceptor;
-import com.everis.cars.jms.CreateCarMessageProducer;
+import com.everis.cars.jms.CarMessageProducer;
 
 /**
  * Rest resource implementation for car management by jms queues
@@ -23,7 +23,7 @@ import com.everis.cars.jms.CreateCarMessageProducer;
 @Path("jms/cars")
 @Interceptors(LoggerInterceptor.class)
 public class CarResourceJMSImpl implements CarResourceJMS {
-	
+
 	/**
 	 * {@link CarService} injected
 	 * 
@@ -33,20 +33,20 @@ public class CarResourceJMSImpl implements CarResourceJMS {
 	CarService carService;
 
 	/**
-	 * {@link CreateCarMessageProducer} injected
+	 * {@link CarMessageProducer} injected
 	 */
 	@EJB
-	private CreateCarMessageProducer createCarMessageProducer;
-	
+	private CarMessageProducer carMessageProducer;
+
 	/**
-	 * {@link Jsonb} instance created with {@link JsonBuilder} 
+	 * {@link Jsonb} instance created with {@link JsonBuilder}
 	 */
 	private Jsonb jsonb = JsonbBuilder.create();
 
 	@Override
 	@POST
 	public Response createCar(final Car car) {
-		createCarMessageProducer.produceMessage(jsonb.toJson(car), "POST");
+		carMessageProducer.produceMessage(jsonb.toJson(car), "POST");
 		return Response.ok().entity(car).build();
 	}
 
@@ -56,9 +56,9 @@ public class CarResourceJMSImpl implements CarResourceJMS {
 	public Response updateCar(@PathParam("carId") final long carId, final Car car) throws CarNotFoundException {
 		// Get the car to check if exists and throws CarNotFound if car doesn't exist
 		carService.getCar(carId);
-		
+
 		car.setId(carId);
-		createCarMessageProducer.produceMessage(jsonb.toJson(car), "PUT");
+		carMessageProducer.produceMessage(jsonb.toJson(car), "PUT");
 
 		return Response.ok().entity(car).build();
 	}
@@ -68,7 +68,7 @@ public class CarResourceJMSImpl implements CarResourceJMS {
 	@Path("/{carId}")
 	public Response deleteCar(@PathParam("carId") final long carId) throws CarNotFoundException {
 		final Car car = carService.getCar(carId);
-		createCarMessageProducer.produceMessage(jsonb.toJson(car), "DELETE");
+		carMessageProducer.produceMessage(jsonb.toJson(car), "DELETE");
 
 		return Response.ok().entity(car).build();
 	}
