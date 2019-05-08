@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
  * Producer helper class to connect and send messages to a queue
  */
 @Stateless
-public class CreateCarMessageProducer {
+public class CarMessageProducer {
 
 	/**
 	 * {@link ConnectionFactory} instance to connect with the jms connection and
@@ -33,7 +33,7 @@ public class CreateCarMessageProducer {
 	 * 
 	 * @see org.apache.log4j.Logger
 	 */
-	private static Logger logger = Logger.getLogger(CreateCarMessageProducer.class);
+	private static Logger logger = Logger.getLogger(CarMessageProducer.class);
 
 	/**
 	 * Send a message to the specified queue with a {@link Car} object parsed to
