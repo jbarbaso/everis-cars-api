@@ -44,9 +44,9 @@ public class ValidatorUtil {
 	 * @param element the object to be validated by the {@link Validator}
 	 * @return array with errors list from constraint violations
 	 */
-	public static <T> ArrayList<String> validate(T element) {
+	public static <T> ArrayList<String> validate(final T element) {
 		ArrayList<String> errors = new ArrayList<String>();
-		Set<ConstraintViolation<T>> constraintViolations = validator.validate(element);
+		final Set<ConstraintViolation<T>> constraintViolations = validator.validate(element);
 
 		for (ConstraintViolation<T> violation : constraintViolations) {
 			logger.error(violation.getMessage());
