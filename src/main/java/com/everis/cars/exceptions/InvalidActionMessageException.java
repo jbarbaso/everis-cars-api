@@ -3,9 +3,10 @@ package com.everis.cars.exceptions;
 import org.apache.log4j.Logger;
 
 /**
- * Custom exception to notice a Car not found exception
+ * Custom exception to notice that action from received
+ * {@link javax.jms.Message} is not valid
  */
-public class InvalidActionException extends Exception {
+public class InvalidActionMessageException extends Exception {
 
 	/**
 	 * Property required for a Serializable class
@@ -17,7 +18,7 @@ public class InvalidActionException extends Exception {
 	 * 
 	 * @see org.apache.log4j.Logger
 	 */
-	private static Logger logger = Logger.getLogger(InvalidActionException.class);
+	private static Logger logger = Logger.getLogger(InvalidActionMessageException.class);
 
 	/**
 	 * Class constructor that receives the custom message to be shown
@@ -25,7 +26,7 @@ public class InvalidActionException extends Exception {
 	 * @param message the {@link Exception} message to be shown
 	 * @return void
 	 */
-	public InvalidActionException(final String message) {
+	public InvalidActionMessageException(final String message) {
 		super(message);
 		logger.error(message);
 	}
