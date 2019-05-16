@@ -17,7 +17,8 @@ import org.apache.log4j.Logger;
 import com.everis.cars.control.CarService;
 import com.everis.cars.entity.Car;
 import com.everis.cars.exceptions.CarNotFoundException;
-import com.everis.cars.exceptions.InvalidActionException;
+import com.everis.cars.exceptions.InvalidActionMessageException;
+import com.everis.cars.exceptions.InvalidCarMessageException;
 import com.everis.cars.utils.ValidatorUtil;
 
 /**
@@ -44,7 +45,14 @@ public class CarMessageListener implements MessageListener {
 	@EJB
 	CarService carService;
 
+	/**
+	 * Initialize {@link JsonbConfig} with formatting value true
+	 */
 	protected final JsonbConfig config = new JsonbConfig().withFormatting(true);
+
+	/**
+	 * Initialize {@link Jsonb} with custom config
+	 */
 	protected final Jsonb jsonb = JsonbBuilder.create(config);
 
 	/**
@@ -64,28 +72,32 @@ public class CarMessageListener implements MessageListener {
 
 				final Car car = jsonb.fromJson(textMessage, Car.class);
 
-				logger.error("before validating");
-				ArrayList<String> errors = ValidatorUtil.validate(car);
-				logger.error("after validating");
-				if (errors.isEmpty()) {
-					logger.error(errors.toString());
+				if (isValidCarMessage(car)) {
 					executeAction(car, action);
-				} else {
-					logger.error("Message has invalid car object");
-					throw new InvalidActionException("Invalid action " + action + " specified.");
 				}
+
 			} else {
-				logger.error("Message received is not text type");
+				throw new InvalidCarMessageException("Message received is not TextMessage type.");
 			}
-		} catch (JMSException e) {
-			logger.error("JMSException executing onMessage(): " + e.toString());
-		} catch (InvalidActionException i) {
-			logger.error("InvalidActionException executing onMessage(): " + i.toString());
-		} catch (CarNotFoundException t) {
-			logger.error("CarNotFoundException executing onMessage(): " + t.toString());
-		} catch (Exception e) {
-			logger.error("Exception executing onMessage(): " + e.toString());
+		} catch (CarNotFoundException | InvalidActionMessageException | InvalidCarMessageException | JMSException e) {
+			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @param car
+	 * @return
+	 * @throws InvalidCarMessageException
+	 */
+	protected boolean isValidCarMessage(final Car car) throws InvalidCarMessageException {
+		final ArrayList<String> errors = ValidatorUtil.validate(car);
+
+		if (!errors.isEmpty()) {
+			throw new InvalidCarMessageException(
+					"Message has invalid car object. \nValidation errors: \n"+errors);
+		}
+
+		return true;
 	}
 
 	/**
@@ -94,29 +106,28 @@ public class CarMessageListener implements MessageListener {
 	 * 
 	 * @return void
 	 * @throws CarNotFoundException
-	 * @throws InvalidActionException
+	 * @throws InvalidActionMessageException
 	 */
 	protected void executeAction(final Car car, final String action)
-			throws CarNotFoundException, InvalidActionException {
+			throws CarNotFoundException, InvalidActionMessageException {
 		switch ((String) action) {
 		case "POST":
-			logger.info("Creating car from " + CarMessageListener.class);
+			logger.info("Creating car");
 			carService.createCar(car);
-			logger.info("Car created from " + CarMessageListener.class);
+			logger.info("Car created");
 			break;
 		case "PUT":
-			logger.info("Updating car from " + CarMessageListener.class);
+			logger.info("Updating car");
 			carService.updateCar(car);
-			logger.info("Car updated from " + CarMessageListener.class);
+			logger.info("Car updated");
 			break;
 		case "DELETE":
-			logger.info("Deleting car from " + CarMessageListener.class);
+			logger.info("Deleting car");
 			carService.deleteCar(car.getId());
-			logger.info("Car deleted from " + CarMessageListener.class);
+			logger.info("Car deleted");
 			break;
 		default:
-			throw new InvalidActionException("Invalid action " + action + " specified.");
+			throw new InvalidActionMessageException("Invalid action " + action + " specified.");
 		}
 	}
-
 }
