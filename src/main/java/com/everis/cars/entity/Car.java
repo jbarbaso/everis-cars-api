@@ -1,7 +1,6 @@
 package com.everis.cars.entity;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.interceptor.Interceptors;
 import javax.persistence.Column;
@@ -16,6 +15,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.everis.cars.interceptors.LoggerInterceptor;
 
@@ -60,11 +60,12 @@ public class Car {
 	protected String brand;
 
 	/**
-	 * Registration car timestamp field
+	 * Registration car {@link LocalDateTime} field
 	 */
 	@Column(name = "registration", nullable = false)
 	@NotNull(message = "Registration field for Car can't be empty.")
-	protected Timestamp registration;
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+	protected LocalDateTime registration;
 
 	/**
 	 * Country car string field
@@ -82,40 +83,41 @@ public class Car {
 	protected boolean status = false;
 
 	/**
-	 * Created timestamp field
+	 * Created {@link LocalDateTime} field
 	 */
 	@Column(name = "created_at", updatable = false, nullable = false)
 	@ApiModelProperty(value = "Created time", accessMode = AccessMode.READ_ONLY)
-	protected Timestamp created_at;
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+	protected LocalDateTime created_at;
 
 	/**
-	 * Last Update timestamp field
+	 * Last Update {@link LocalDateTime} field
 	 */
 	@Column(name = "updated_at", nullable = false)
 	@ApiModelProperty(value = "Last updated time", accessMode = AccessMode.READ_ONLY)
-	protected Timestamp updated_at;
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+	protected LocalDateTime updated_at;
 
 	/**
-	 * Add current timestamp values to created_at and updated_at before persist.
+	 * Add current {@link LocalDateTime} values to created_at and updated_at before
+	 * persist.
 	 * 
 	 * @return void
 	 */
 	@PrePersist
 	protected void onCreate() {
-		final Date date = new Date();
-		created_at = new Timestamp(date.getTime());
-		updated_at = new Timestamp(date.getTime());
+		created_at = LocalDateTime.now();
+		updated_at = LocalDateTime.now();
 	}
 
 	/**
-	 * Add current timestamp value to updated_at before update.
+	 * Add current {@link LocalDateTime} value to updated_at before update.
 	 * 
 	 * @return void
 	 */
 	@PreUpdate
 	protected void onUpdate() {
-		final Date date = new Date();
-		updated_at = new Timestamp(date.getTime());
+		updated_at = LocalDateTime.now();
 	}
 
 	/**
@@ -159,9 +161,9 @@ public class Car {
 	/**
 	 * Registration getter method
 	 * 
-	 * @return car registration value in timestamp format
+	 * @return car registration value in {@link LocalDateTime} format
 	 */
-	public Timestamp getRegistration() {
+	public LocalDateTime getRegistration() {
 		return registration;
 	}
 
@@ -171,7 +173,7 @@ public class Car {
 	 * @param car registration value to be setted
 	 * @return void
 	 */
-	public void setRegistration(final Timestamp registration) {
+	public void setRegistration(final LocalDateTime registration) {
 		this.registration = registration;
 	}
 
@@ -216,9 +218,9 @@ public class Car {
 	/**
 	 * Created at getter method
 	 * 
-	 * @return car created_at field in timestamp format
+	 * @return car created_at field in {@link LocalDateTime} format
 	 */
-	public Timestamp getCreated_at() {
+	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
 
@@ -228,16 +230,16 @@ public class Car {
 	 * @param car created_at value to be setted
 	 * @return void
 	 */
-	public void setCreated_at(final Timestamp created_at) {
+	public void setCreated_at(final LocalDateTime created_at) {
 		this.created_at = created_at;
 	}
 
 	/**
 	 * Updated at getter method
 	 * 
-	 * @return car updated_at field in timestamp format
+	 * @return car updated_at field in {@link LocalDateTime} format
 	 */
-	public Timestamp getUpdated_at() {
+	public LocalDateTime getUpdated_at() {
 		return updated_at;
 	}
 
@@ -247,7 +249,7 @@ public class Car {
 	 * @param car updated_at value to be setted
 	 * @return void
 	 */
-	public void setUpdated_at(final Timestamp updated_at) {
+	public void setUpdated_at(final LocalDateTime updated_at) {
 		this.updated_at = updated_at;
 	}
 }
